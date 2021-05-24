@@ -1,11 +1,70 @@
+/**
+* matematica.js 1.0, 24/05/2021
+* Autor: Thiago de O. Alves.
+* 24/05/2021 - versão 1.0
+*/
+// MODELO DE DOCUMENTAÇÃO.
+/**
+* Sinopse: O que a função faz.
+*	objeto_chamador.função(x, y, z);
+* Entrada(s):
+*	x: descrição do parâmetro x.
+*	y: descrição do parâmetro y.
+*	z (opcional): descrição do parâmetro z.
+* Saída: 
+*	Descreve o que a função retorna.
+* Descrição:
+*	Descrição completa do uso, processamento das entradas
+*	e a saída da função.
+* Exemplo:
+*	var x = a, y = b, z = c; // Inicia o(s) argumento(s). 
+*	objeto_chamador.função(x, y, z) // Retorna valor_de_retorno.
+* DESDE: 1.0
+* VEJA: 
+*	lista de funções utilitárias.
+*/
+//////////////////////////////////////////////////////////////////
+
 //VETORES
 
-/**Retorna um escalar, produto interno entre a e b*/
+/**
+* Sinopse: calcula o produto escalar de dois vetores tridimensionais.
+*	produtoInterno(a, b);
+* Entrada(s):
+*	a: array de 3 elementos numéricos.
+*	b: array de 3 elementos numéricos.
+* Saída: 
+*	Retorna um número real, valor do produto interno entre a e b.
+* Descrição:
+*	Dando como entrada os arrays a e b, a função calcula o produto
+*	interno usando os 3 primeiros elementos de cada um deles. Isso
+*	faz com que os arrays a e b simulem vetores em três dimensões.
+* Exemplo:
+*	var a = [2, -3, 0], b = [4, 2, 1]; // Inicia os vetores a e b.
+*	produtoInterno(a, b); // Retorna 2.
+* DESDE: 1.0
+*/
 function produtoInterno(a, b) {
 	return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 }
 
-/**Retorna um vetor, produto vetorial entre a e b*/
+/**
+* Sinopse: calcula o produto vetorial de dois vetores tridimensionais.
+*	produtoVetorial(a, b);
+* Entrada(s):
+*	a: array de 3 elementos numéricos.
+*	b: array de 3 elementos numéricos.
+* Saída: 
+*	Retorna um vetor, valor do produto vetorial entre a e b.
+* Descrição:
+*	Dando como entrada os arrays a e b, a função calcula o produto
+*	vetorial usando os 3 primeiros elementos de cada um deles. Isso
+*	faz com que os arrays a e b simulem vetores em três dimensões.
+* Exemplo:
+*	var a = [2, -3, 0], b = [4, 2, 1]; // Inicia os vetores a e b.
+*	produtoVetorial(a, b); // Retorna [-2, -3, 16].
+* DESDE: 1.0
+*/
 function produtoVetorial(a, b) {
 	var c = new Array(3);
 	c[0] = a[1] * b[2] - b[1] * a[2];
@@ -14,12 +73,49 @@ function produtoVetorial(a, b) {
 	return c;
 }
 
-/**Retorna o módulo do vetor*/
+/**
+* Sinopse: calcula o módulo de um vetor tridimensional.
+*	modulo(a);
+* Entrada(s):
+*	a: array numérico de 3 elementos.
+* Saída: 
+*	Um número real, módulodo vetor a.
+* Descrição:
+*	Dado o array a como entrada, a função usa seus primeiros três
+*	elementos para simular um vetor tridimensional e calcula seu
+*	módulo.
+* Exemplo:
+*	var a = [4, 2, 1]; // Inicia o argumento. 
+*	modulo(a) // Retorna 4.58257569495584.
+* DESDE: 1.0
+* VEJA: 
+*	Math.sqrt().
+*/
 function modulo(a) {
 	return Math.sqrt(a[0]**2 + a[1]**2 + a[2]**2);
 }
 
-/**Retorna o ângulo entre dois vetores em radianos*/
+/**
+* Sinopse: calcula o ângulo entre dois vetores.
+*	angulo(a, b);
+* Entrada(s):
+*	a: array de 3 elementos numéricos.
+*	b: array de 3 elementos numéricos.
+* Saída: 
+*	Retorna um número real, valor do menor ângulo entre a e b
+*	em radianos.
+* Descrição:
+*	Dando como entrada os arrays a e b, a função utiliza os três 
+*	primeiros elementos de cada, simulando vetores em três dimensões,
+*	e calcula em radianos o menor ângulo entre eles com o uso do
+*	produto interno e da função interna Math.acos().
+* Exemplo:
+*	var a = [2, -3, 0], b = [4, 2, 1]; // Inicia os vetores a e b.
+*	angulo(a, b); // Retorna 1.4494532607018238.
+* DESDE: 1.0
+* VEJA: 
+*	produtoInterno(), Math.acos().
+*/
 function angulo(a, b) {
 	var p = produtoInterno(a, b);
 	var ma = modulo(a);
@@ -27,7 +123,23 @@ function angulo(a, b) {
 	return Math.acos(p / (ma * mb));
 }
 
-/**Retorna a soma dos vetores*/
+/**
+* Sinopse: calcula a soma de dois vetores tridimensionais.
+*	soma(a, b);
+* Entrada(s):
+*	a: array de 3 elementos numéricos.
+*	b: array de 3 elementos numéricos.
+* Saída: 
+*	Retorna um número real, valor da soma entre a e b.
+* Descrição:
+*	Dando como entrada os arrays a e b, a função utiliza os três 
+*	primeiros elementos de cada, simulando vetores em três dimensões,
+*	e calcula a soma entre eles.
+* Exemplo:
+*	var a = [2, -3, 0], b = [4, 2, 1]; // Inicia os vetores a e b.
+*	soma(a, b); // Retorna [6, -1, 1].
+* DESDE: 1.0
+*/
 function soma(a, b) {
 	var r = new Array(3)
 	r[0] = a[0] + b[0];
@@ -36,7 +148,23 @@ function soma(a, b) {
 	return r;
 }
 		
-/**Retorna a diferença entro os vetores*/
+/**
+* Sinopse: calcula a diferença entre dois vetores tridimensionais.
+*	diferenca(a, b);
+* Entrada(s):
+*	a: array de 3 elementos numéricos.
+*	b: array de 3 elementos numéricos.
+* Saída: 
+*	Retorna um número real, valor da diferença entre a e b.
+* Descrição:
+*	Dando como entrada os arrays a e b, a função utiliza os três 
+*	primeiros elementos de cada, simulando vetores em três dimensões,
+*	e calcula a diferença entre eles.
+* Exemplo:
+*	var a = [2, -3, 0], b = [4, 2, 1]; // Inicia os vetores a e b.
+*	diferenca(a, b); // Retorna [-2, -5, -1].
+* DESDE: 1.0
+*/
 function diferenca(a, b) {
 	var r = new Array(3);
 	r[0] = a[0] - b[0];
