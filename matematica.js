@@ -1,7 +1,7 @@
 /**
 * matematica.js 1.0, 24/05/2021
 * Autor: Thiago de O. Alves.
-* 29/05/2021 - versão 1.0.1
+* 29/05/2021 - versão 1.0.2
 */
 // MODELO DE DOCUMENTAÇÃO.
 /**
@@ -238,7 +238,7 @@ mat.estatistica = (function(){
 		for (var i in freq) {
 			if (freq[i] == max) moda.push(data[i]); 
 		}	
-		return elementosDiferentes(moda);
+		return mat.conjuntos.elementosDiferentes(moda);
 	}
 
 	/**
@@ -446,7 +446,7 @@ mat.conjuntos = (function(){
 
 	/**Retorna a união de array1 com array2*/
 	function uniao(array1, array2) {
-		return this.elementosDiferentes(array1.concat(array2));
+		return elementosDiferentes(array1.concat(array2));
 	}
 
 	/**Retorna a interseção de array1 com array2*/
@@ -457,7 +457,7 @@ mat.conjuntos = (function(){
 				inter.push(array1[i]);
 			}
 		}
-		return this.elementosDiferentes(inter);
+		return elementosDiferentes(inter);
 	}
 
 	/**Retorna a diferença de array1 com array2*/
@@ -468,7 +468,7 @@ mat.conjuntos = (function(){
 				dif.push(array1[i]);
 			}
 		}
-		return this.elementosDiferentes(dif);
+		return elementosDiferentes(dif);
 	}
 	
 	return {
@@ -541,7 +541,7 @@ mat.quadratica = (function(){
 	
 	return {
 		delta: delta,
-		Quadratica: quadratica,
+		Quadratica: Quadratica,
 		raizes: raizes,
 		vertice: vertice
 	};
