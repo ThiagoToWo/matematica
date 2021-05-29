@@ -1,7 +1,7 @@
 /**
 * matematica.js 1.0, 24/05/2021
 * Autor: Thiago de O. Alves.
-* 24/05/2021 - versão 1.0
+* 29/05/2021 - versão 1.0.1
 */
 // MODELO DE DOCUMENTAÇÃO.
 /**
