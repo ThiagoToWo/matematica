@@ -646,7 +646,7 @@ mat.geometria = (function(){
 		var a = [];
 		for (var x = 2; x <= n; x++) {
 			for (var y = (x % 2 == 0 ? 1 : 2); y < x; y += 2) {
-				if (mdc(x, y) == 1) {
+				if (mat.aritmetica.mdc(x, y) == 1) {
 					a.push([x * x - y * y, 2 * x * y, x * x + y * y]);
 				}
 			}
