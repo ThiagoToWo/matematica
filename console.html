@@ -16,29 +16,16 @@
 		window.addEventListener('keydown', function(e) {			
 			var tecla = e.keyCode;			
 			if (tecla == /*Enter*/13) {
-				if (cmd == undefined) {
-					cmd = [console.value];
-					index = cmd.length;
-					var ultimo = cmd[index - 1];
-					try {
-						var resultado = eval(ultimo);
-						result.value = resultado;
-						console.value = '';
-					} catch (e) {
-						result.value = e;
-					} 
-				} else {
-					cmd.push(console.value);
-					index = cmd.length;
-					var ultimo = cmd[index - 1];
-					try {
-						var resultado = eval(ultimo);
-						result.value = resultado;
-						console.value = '';
-					} catch (e) {
-						result.value = e;
-					} 
-				}				
+				cmd.push(console.value);
+				index = cmd.length;
+				var ultimo = cmd[index - 1];
+				try {
+					var resultado = eval(ultimo);
+					result.value = resultado;
+					console.value = '';
+				} catch (e) {
+					result.value = e;
+				} 
 			}
 		})
 		window.addEventListener('keydown', function(e) {			
