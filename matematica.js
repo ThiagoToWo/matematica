@@ -1,9 +1,33 @@
 /**
 * matematica.js 1.0, 24/05/2021
 * Autor: Thiago de O. Alves.
-* 29/05/2021 - versão 1.0.2
+* 08/06/2021 - versão 1.0.3
 */
-// MODELO DE DOCUMENTAÇÃO.
+// DOCUMENTAÇÃO DOS MÓDULOS.
+/**
+* Sinopse: O tema que o módulo aborda.
+*	nomedoprojeto.modulo
+* Retorna: 
+*	Retorna o seguinte objeto.
+*	{
+*		ATRIBUTO: ATRIBUTO, => definição da propriedade
+*		f: função, => sinopse da função
+*		objeto: objeto, => objeto
+*		Classe: Classe, => classe
+*	}
+* Descrição:
+*	Descrição completa das aplicações do módulo.
+* Exemplo:
+*	var m = nomedoprojeto.modulo; // Pode-se armazenar em uma variável para uso frequente.
+*	m.ATRIBUTO; // Retorna valor_da_propriedade.
+*	m.f([par1, ..., parN]); // Chama a função f.
+*	var o = m.objeto; // Retorna objeto para uso de suas propriedades e métodos.
+*	var c = new m.Classe([par1, ..., parN]); // Instancia uma classe Classe do módulo.
+* DESDE: número_da_versão
+* VEJA: 
+*	documentação interna.
+*/
+// DOCUMENTAÇÃO DE FUNÇÕES.
 /**
 * Sinopse: O que a função faz.
 *	objeto_chamador.função(x, y, z)
@@ -28,10 +52,30 @@ var mat = mat || {};
 //////////////////////////////////////////////////////////////////
 
 //VETORES
+/**
+* Sinopse: Operações com vetores.
+*	mat.vetores
+* Retorna: 
+*	Retorna o seguinte objeto.
+*	{
+		angulo: angulo, => ângulo entre dois vetores.
+		diferenca: diferenca, => diferença entre dois vetores.
+		modulo: modulo, => módulo de um vetor.
+		produtoInterno: produtoInterno, => produto interno entre dois vetores.
+		produtoVetorial: produtoVetorial, => produto vetorial entre dois vetores.
+		soma: soma => soma de dois vetores.
+*	}
+* Exemplo:
+*	var mv = mat.vetores; // Pode-se armazenar em uma variável para uso frequente.
+*	mv.soma([2,-3,4], [1,0,5]); // Chama a função soma.
+* DESDE: 1.0
+* VEJA: 
+*	documentação interna das funções.
+*/
 mat.vetores = (function(){
 	/**
 	* Sinopse: calcula o produto escalar de dois vetores tridimensionais.
-	*	produtoInterno(a, b)
+	*	mat.vetores.produtoInterno(a, b)
 	* Entrada(s):
 	*	a: array de 3 elementos numéricos.
 	*	b: array de 3 elementos numéricos.
@@ -43,7 +87,8 @@ mat.vetores = (function(){
 	*	faz com que os arrays a e b simulem vetores em três dimensões.
 	* Exemplo:
 	*	var a = [2, -3, 0], b = [4, 2, 1]; // Inicia os vetores a e b.
-	*	produtoInterno(a, b); // Retorna 2.
+	*	var m = mat.vetores;
+	*	m.produtoInterno(a, b); // Retorna 2.
 	* DESDE: 1.0
 	*/
 	function produtoInterno(a, b) {
@@ -52,7 +97,7 @@ mat.vetores = (function(){
 
 	/**
 	* Sinopse: calcula o produto vetorial de dois vetores tridimensionais.
-	*	produtoVetorial(a, b)
+	*	mat.vetores.produtoVetorial(a, b)
 	* Entrada(s):
 	*	a: array de 3 elementos numéricos.
 	*	b: array de 3 elementos numéricos.
@@ -64,7 +109,8 @@ mat.vetores = (function(){
 	*	faz com que os arrays a e b simulem vetores em três dimensões.
 	* Exemplo:
 	*	var a = [2, -3, 0], b = [4, 2, 1]; // Inicia os vetores a e b.
-	*	produtoVetorial(a, b); // Retorna [-2, -3, 16].
+	*	var m = mat.vetores;
+	*	m.produtoVetorial(a, b); // Retorna [-2, -3, 16].
 	* DESDE: 1.0
 	*/
 	function produtoVetorial(a, b) {
@@ -77,7 +123,7 @@ mat.vetores = (function(){
 
 	/**
 	* Sinopse: calcula o módulo de um vetor tridimensional.
-	*	modulo(a)
+	*	mat.vetores.modulo(a)
 	* Entrada(s):
 	*	a: array numérico de 3 elementos.
 	* Saída: 
@@ -88,7 +134,8 @@ mat.vetores = (function(){
 	*	módulo.
 	* Exemplo:
 	*	var a = [4, 2, 1]; // Inicia o argumento. 
-	*	modulo(a) // Retorna 4.58257569495584.
+	*	var m = mat.vetores;
+	*	m.modulo(a) // Retorna 4.58257569495584.
 	* DESDE: 1.0
 	* VEJA: 
 	*	Math.sqrt().
@@ -99,7 +146,7 @@ mat.vetores = (function(){
 
 	/**
 	* Sinopse: calcula o ângulo entre dois vetores.
-	*	angulo(a, b)
+	*	mat.vetores.angulo(a, b)
 	* Entrada(s):
 	*	a: array de 3 elementos numéricos.
 	*	b: array de 3 elementos numéricos.
@@ -113,7 +160,8 @@ mat.vetores = (function(){
 	*	produto interno e da função interna Math.acos().
 	* Exemplo:
 	*	var a = [2, -3, 0], b = [4, 2, 1]; // Inicia os vetores a e b.
-	*	angulo(a, b); // Retorna 1.4494532607018238.
+	*	var m = mat.vetores;
+	*	m.angulo(a, b); // Retorna 1.4494532607018238.
 	* DESDE: 1.0
 	* VEJA: 
 	*	produtoInterno(), Math.acos().
@@ -127,7 +175,7 @@ mat.vetores = (function(){
 
 	/**
 	* Sinopse: calcula a soma de dois vetores tridimensionais.
-	*	soma(a, b)
+	*	mat.vetores.soma(a, b)
 	* Entrada(s):
 	*	a: array de 3 elementos numéricos.
 	*	b: array de 3 elementos numéricos.
@@ -139,7 +187,8 @@ mat.vetores = (function(){
 	*	e calcula a soma entre eles.
 	* Exemplo:
 	*	var a = [2, -3, 0], b = [4, 2, 1]; // Inicia os vetores a e b.
-	*	soma(a, b); // Retorna [6, -1, 1].
+	*	var m = mat.vetores;
+	*	m.soma(a, b); // Retorna [6, -1, 1].
 	* DESDE: 1.0
 	*/
 	function soma(a, b) {
@@ -152,7 +201,7 @@ mat.vetores = (function(){
 			
 	/**
 	* Sinopse: calcula a diferença entre dois vetores tridimensionais.
-	*	diferenca(a, b)
+	*	mat.vetores.diferenca(a, b)
 	* Entrada(s):
 	*	a: array de 3 elementos numéricos.
 	*	b: array de 3 elementos numéricos.
@@ -164,7 +213,8 @@ mat.vetores = (function(){
 	*	e calcula a diferença entre eles.
 	* Exemplo:
 	*	var a = [2, -3, 0], b = [4, 2, 1]; // Inicia os vetores a e b.
-	*	diferenca(a, b); // Retorna [-2, -5, -1].
+	*	var m = mat.vetores;
+	*	m.diferenca(a, b); // Retorna [-2, -5, -1].
 	* DESDE: 1.0
 	*/
 	function diferenca(a, b) {
@@ -187,9 +237,42 @@ mat.vetores = (function(){
 
 ////////////////////////////////////////////////////////////////////////////
 
-//ESTATÍSTICA E PLOTAGEM GRÁFICA
+//ESTATÍSTICA
+/**
+* Sinopse: Cálculos estatístios e plotagem.
+*	mat.estatistica
+* Retorna: 
+*	Retorna o seguinte objeto.
+*	{
+*		desenharGrid: desenharGrid, => cria um grid em um canvas.
+		frequencia: frequencia, => freqência dos elementos de um array.
+		media: media, => média dos elementos de um array.
+		mediana: mediana, => mediana dos elementos de um array.
+		moda: moda, => moda dos elementos de um array.
+		plotarPontos: plotarPontos, => plota pontos no canvas.
+		plotarReta: plotarReta, => plota reta no canvas.
+		retaMinQuadrados: retaMinQuadrados => reta dos mínimos quadrados.
+*	}
+* Exemplo:
+*	var me = mat.estatistica; // Pode-se armazenar em uma variável para uso frequente.
+*	me.media([2,3,5,5,6,3,5]); // Chama a função media.
+* DESDE: 1.0
+* VEJA: 
+*	documentação interna das funções.
+*/
 mat.estatistica = (function(){
-	/**Retorna a média aritmética dos números do array data*/
+	/**
+	* Sinopse: Calcula a média aritmética de uma lista de números.
+	*	mat.estatistica.media(data)
+	* Entrada(s):
+	*	data: array de elementos numéricos.
+	* Saída: 
+	*	Retorna um número real, média aritmética dos elementos de data.
+	* Exemplo:
+	*	var data = [2,4,3,5,5,6,3,5]; // Inicia o(s) argumento(s). 
+	*	mat.estatistica.media(data); // Retorna 4.125.
+	* DESDE: 1.0
+	*/
 	function media(data) {
 		var soma = 0;
 		for (var i = 0; i < data.length; i++) {
@@ -198,7 +281,28 @@ mat.estatistica = (function(){
 		return soma / data.length;
 	}
 
-	/**Retorna a mediana dos números do array data*/
+	/**
+	* Sinopse: Calcula a mediana de uma lista de números.
+	*	mat.estatistica.mediana(data)
+	* Entrada(s):
+	*	data: array de elementos numéricos.
+	* Saída: 
+	*	Retorna um número real, mediana dos elementos de data.
+	* Descrição:
+	*	Dado um array numérico data, a função o ordena em ordem numérica
+	*	crescente e calcula sua mediana e acordo com a quantidade ímpar ou
+	* 	par de elementos. 
+	*	Uma observação importante é que, depois de usado
+	*	como entrada na	função mediana, o array data se mantém ordenado e
+	*	deve-se ter isso em mente em usos futuros do mesmo.
+	* Exemplo:
+	*	var data = [2,4,3,5,5,6,3,5]; // Inicia o(s) argumento(s). 
+	*	var m = mat.estatistica;
+	*	m.mediana(data); // Retorna 4.5 e deixa data = [2,3,3,4,5,5,5,6].
+	* DESDE: 1.0
+	* VEJA: 
+	*	Array.sort().
+	*/
 	function mediana(data) {
 		var n = data.length;
 		data.sort(function(a, b) {
@@ -215,6 +319,22 @@ mat.estatistica = (function(){
 	* Retorna um array com a distribuição de frequência dos elementos
 	* do array data. 
 	*/
+	/**
+	* Sinopse: Conta a freqência de cada elemento do array.
+	*	mat.estatistica.frequencia(data)
+	* Entrada(s):
+	*	data: um array.
+	* Saída: 
+	*	Retorna um array onde cada número representa a freqência do 
+	*	elemento naquele índice.
+	* Exemplo:
+	*	var data1 = [2,4,3,5,5,6,3,5]; // Array numérico.
+	*	var data2 = [2,{x:0},2,'t','t']; // Array com vários tipos de elementos.
+	* 	var m = mat.estatistica;
+	*	m.frequencia(data1); // Retorna [1,1,2,3,3,1,2,3].
+	*	m.frequencia(data2); // Retorna [2,1,2,2,2].
+	* DESDE: 1.0
+	*/
 	function frequencia(data) {
 		var f = [];
 		for (var i = 0; i < data.length; i++) {
@@ -230,7 +350,28 @@ mat.estatistica = (function(){
 		return f;
 	}
 
-	/**Retorna um array com os elementos que representam a moda em data.*/
+	/**
+	* Sinopse: Calcula a moda de uma lista de números.
+	*	mat.estatistica.moda(data)
+	* Entrada(s):
+	*	data: um array.
+	* Saída: 
+	*	Retorna um array com os elementos que representam a moda em data.
+	* Descrição:
+	*	Dado um array data como entrada, a função calcula a frequência de 
+	*	cada elemento e o valor máximo dessas frequências. Depois ela
+	*	retorna um array contendo os elementos que possuem essa freqência
+	*	máxima. 
+	* Exemplo:
+	*	var data1 = [2,4,3,5,5,6,3,5]; // Array numérico.
+	*	var data2 = [2,{x:0},2,'t','t']; // Array com vários tipos de elementos.
+	* 	var m = mat.estatistica;
+	*	m.moda(data1); // Retorna [5] (unimodal).
+	*	m.moda(data2); // Retorna [2,t] (bimodal).
+	* DESDE: 1.0
+	* VEJA: 
+	*	frequencia(), mat.util.maximo(), mat.conjuntos.elementosDiferentes().
+	*/
 	function moda(data) {
 		var freq = frequencia(data);
 		var max = mat.util.maximo(freq);
@@ -242,12 +383,31 @@ mat.estatistica = (function(){
 	}
 
 	/**
-	* Passados os arrays com as entradas de x e as entradas de y, retorna
-	* um array [a0, a1, r] com o coeficiente linear, coeficiente
-	* angular e coeficiente de correlação, respectivamente, da reta de mínimo
-	* quadrado. 
+	* Sinopse: Calcula os parâmetros da reta dos mínimos quadrados.
+	*	mat.estatistica.retaMinQuadrados(x, y)
+	* Entrada(s):
+	*	x: array numérico com os valores da variável independente x.
+	*	y: array numérico com os valores da variável dependente y.
+	* Saída: 
+	*	Rerorna um array com os coeficientes da reta de mínimos quadrados
+	*	e o coeficiente de correlação.
+	* Descrição:
+	* 	Passados os arrays com as entradas de x e as entradas de y, retorna
+	* 	um array [a0, a1, r] com o coeficiente linear, coeficiente angular
+	*	e coeficiente de correlação, respectivamente, da reta de mínimos
+	* 	quadrados. 
+	*	A função usa como domínio as entradas de x e o tamanho dela como
+	*	referência. Logo, y deve possuir uma quantidade igual ou superior
+	* 	de elementos. No caso de quantidade maior que x, os elementos
+	*	excedentes não participam do cálculo.
+	* Exemplo:
+	*	var x = [1,2,4,5], // Domínio com quatro elementos. 
+	*	var y = [3.2,5.6,8.4,9.7,11.1]; // O valor 11.1 não será usado.
+	*	var m = mat.estatistica;
+	*	m.retaMinQuadrados(x, y); // Retorna [1.985,1.58,0.992406...].
+	* DESDE: 1.0
 	*/
-	function retaMinimoQuadrado(x, y) {
+	function retaMinQuadrados(x, y) {
 		var n = x.length;
 		var sx = 0;
 		var sy = 0;
@@ -420,7 +580,7 @@ mat.estatistica = (function(){
 		moda: moda,
 		plotarPontos: plotarPontos,
 		plotarReta: plotarReta,
-		retaMinimoQuadrado: retaMinimoQuadrado
+		retaMinQuadrados: retaMinQuadrados
 	};
 }());
 
