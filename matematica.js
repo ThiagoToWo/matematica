@@ -3,50 +3,7 @@
 * Autor: Thiago de O. Alves.
 * 08/06/2021 - versão 1.0.3
 */
-// DOCUMENTAÇÃO DOS MÓDULOS.
-/**
-* Sinopse: O tema que o módulo aborda.
-*	nomedoprojeto.modulo
-* Retorna: 
-*	Retorna o seguinte objeto.
-*	{
-*		ATRIBUTO: ATRIBUTO, => definição da propriedade
-*		f: função, => sinopse da função
-*		objeto: objeto, => objeto
-*		Classe: Classe, => classe
-*	}
-* Descrição:
-*	Descrição completa das aplicações do módulo.
-* Exemplo:
-*	var m = nomedoprojeto.modulo; // Pode-se armazenar em uma variável para uso frequente.
-*	m.ATRIBUTO; // Retorna valor_da_propriedade.
-*	m.f([par1, ..., parN]); // Chama a função f.
-*	var o = m.objeto; // Retorna objeto para uso de suas propriedades e métodos.
-*	var c = new m.Classe([par1, ..., parN]); // Instancia uma classe Classe do módulo.
-* DESDE: número_da_versão
-* VEJA: 
-*	documentação interna.
-*/
-// DOCUMENTAÇÃO DE FUNÇÕES.
-/**
-* Sinopse: O que a função faz.
-*	objeto_chamador.função(x, y, z)
-* Entrada(s):
-*	x: descrição do parâmetro x.
-*	y: descrição do parâmetro y.
-*	z (opcional): descrição do parâmetro z.
-* Saída: 
-*	Descreve o que a função retorna.
-* Descrição:
-*	Descrição completa do uso, processamento das entradas
-*	e a saída da função.
-* Exemplo:
-*	var x = a, y = b, z = c; // Inicia o(s) argumento(s). 
-*	objeto_chamador.função(x, y, z) // Retorna valor_de_retorno.
-* DESDE: número da versão
-* VEJA: 
-*	lista de funções utilitárias.
-*/
+
 var mat = mat || {};
 
 //////////////////////////////////////////////////////////////////
@@ -58,12 +15,12 @@ var mat = mat || {};
 * Retorna: 
 *	Retorna o seguinte objeto.
 *	{
-		angulo: angulo, => ângulo entre dois vetores.
-		diferenca: diferenca, => diferença entre dois vetores.
-		modulo: modulo, => módulo de um vetor.
-		produtoInterno: produtoInterno, => produto interno entre dois vetores.
-		produtoVetorial: produtoVetorial, => produto vetorial entre dois vetores.
-		soma: soma => soma de dois vetores.
+*		angulo: angulo, => ângulo entre dois vetores.
+*		diferenca: diferenca, => diferença entre dois vetores.
+*		modulo: modulo, => módulo de um vetor.
+*		produtoInterno: produtoInterno, => produto interno entre dois vetores.
+*		produtoVetorial: produtoVetorial, => produto vetorial entre dois vetores.
+*		soma: soma => soma de dois vetores.
 *	}
 * Exemplo:
 *	var mv = mat.vetores; // Pode-se armazenar em uma variável para uso frequente.
@@ -72,7 +29,9 @@ var mat = mat || {};
 * VEJA: 
 *	documentação interna das funções.
 */
+
 mat.vetores = (function(){
+
 	/**
 	* Sinopse: calcula o produto escalar de dois vetores tridimensionais.
 	*	mat.vetores.produtoInterno(a, b)
@@ -91,6 +50,7 @@ mat.vetores = (function(){
 	*	m.produtoInterno(a, b); // Retorna 2.
 	* DESDE: 1.0
 	*/
+	
 	function produtoInterno(a, b) {
 		return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 	}
@@ -113,6 +73,7 @@ mat.vetores = (function(){
 	*	m.produtoVetorial(a, b); // Retorna [-2, -3, 16].
 	* DESDE: 1.0
 	*/
+	
 	function produtoVetorial(a, b) {
 		var c = new Array(3);
 		c[0] = a[1] * b[2] - b[1] * a[2];
@@ -140,6 +101,7 @@ mat.vetores = (function(){
 	* VEJA: 
 	*	Math.sqrt().
 	*/
+	
 	function modulo(a) {
 		return Math.sqrt(a[0]**2 + a[1]**2 + a[2]**2);
 	}
@@ -166,6 +128,7 @@ mat.vetores = (function(){
 	* VEJA: 
 	*	produtoInterno(), Math.acos().
 	*/
+	
 	function angulo(a, b) {
 		var p = produtoInterno(a, b);
 		var ma = modulo(a);
@@ -191,6 +154,7 @@ mat.vetores = (function(){
 	*	m.soma(a, b); // Retorna [6, -1, 1].
 	* DESDE: 1.0
 	*/
+	
 	function soma(a, b) {
 		var r = new Array(3)
 		r[0] = a[0] + b[0];
@@ -217,6 +181,7 @@ mat.vetores = (function(){
 	*	m.diferenca(a, b); // Retorna [-2, -5, -1].
 	* DESDE: 1.0
 	*/
+	
 	function diferenca(a, b) {
 		var r = new Array(3);
 		r[0] = a[0] - b[0];
@@ -245,13 +210,13 @@ mat.vetores = (function(){
 *	Retorna o seguinte objeto.
 *	{
 *		desenharGrid: desenharGrid, => cria um grid em um canvas.
-		frequencia: frequencia, => freqência dos elementos de um array.
-		media: media, => média dos elementos de um array.
-		mediana: mediana, => mediana dos elementos de um array.
-		moda: moda, => moda dos elementos de um array.
-		plotarPontos: plotarPontos, => plota pontos no canvas.
-		plotarReta: plotarReta, => plota reta no canvas.
-		retaMinQuadrados: retaMinQuadrados => reta dos mínimos quadrados.
+*		frequencia: frequencia, => freqência dos elementos de um array.
+*		media: media, => média dos elementos de um array.
+*		mediana: mediana, => mediana dos elementos de um array.
+*		moda: moda, => moda dos elementos de um array.
+*		plotarPontos: plotarPontos, => plota pontos no canvas.
+*		plotarReta: plotarReta, => plota reta no canvas.
+*		retaMinQuadrados: retaMinQuadrados => reta dos mínimos quadrados.
 *	}
 * Exemplo:
 *	var me = mat.estatistica; // Pode-se armazenar em uma variável para uso frequente.
@@ -260,7 +225,9 @@ mat.vetores = (function(){
 * VEJA: 
 *	documentação interna das funções.
 */
+
 mat.estatistica = (function(){
+
 	/**
 	* Sinopse: Calcula a média aritmética de uma lista de números.
 	*	mat.estatistica.media(data)
@@ -273,6 +240,7 @@ mat.estatistica = (function(){
 	*	mat.estatistica.media(data); // Retorna 4.125.
 	* DESDE: 1.0
 	*/
+
 	function media(data) {
 		var soma = 0;
 		for (var i = 0; i < data.length; i++) {
@@ -303,6 +271,7 @@ mat.estatistica = (function(){
 	* VEJA: 
 	*	Array.sort().
 	*/
+
 	function mediana(data) {
 		var n = data.length;
 		data.sort(function(a, b) {
@@ -315,10 +284,6 @@ mat.estatistica = (function(){
 		}
 	}
 
-	/**
-	* Retorna um array com a distribuição de frequência dos elementos
-	* do array data. 
-	*/
 	/**
 	* Sinopse: Conta a freqência de cada elemento do array.
 	*	mat.estatistica.frequencia(data)
@@ -335,6 +300,7 @@ mat.estatistica = (function(){
 	*	m.frequencia(data2); // Retorna [2,1,2,2,2].
 	* DESDE: 1.0
 	*/
+	
 	function frequencia(data) {
 		var f = [];
 		for (var i = 0; i < data.length; i++) {
@@ -372,6 +338,7 @@ mat.estatistica = (function(){
 	* VEJA: 
 	*	frequencia(), mat.util.maximo(), mat.conjuntos.elementosDiferentes().
 	*/
+	
 	function moda(data) {
 		var freq = frequencia(data);
 		var max = mat.util.maximo(freq);
@@ -398,7 +365,7 @@ mat.estatistica = (function(){
 	* 	quadrados. 
 	*	A função usa como domínio as entradas de x e o tamanho dela como
 	*	referência. Logo, y deve possuir uma quantidade igual ou superior
-	* 	de elementos. No caso de quantidade maior que x, os elementos
+	* 	a x de elementos. No caso de quantidade maior que x, os elementos
 	*	excedentes não participam do cálculo.
 	* Exemplo:
 	*	var x = [1,2,4,5], // Domínio com quatro elementos. 
@@ -407,6 +374,7 @@ mat.estatistica = (function(){
 	*	m.retaMinQuadrados(x, y); // Retorna [1.985,1.58,0.992406...].
 	* DESDE: 1.0
 	*/
+	
 	function retaMinQuadrados(x, y) {
 		var n = x.length;
 		var sx = 0;
@@ -435,18 +403,54 @@ mat.estatistica = (function(){
 	}
 
 	/**
-	* Função que plota pontos em canvas.
-	* Entradas obrigatórias:
-	* 	context: contexto 2d do canvas.
+	* Sinopse: Plota pontos em canvas.
+	*	mat.estatistica.plotarPontos(context, arrayX, arrayY, raio, bordaGrid, cor)
+	* Entrada(s):
+	*	context: contexto 2d do canvas.
 	* 	arrayX: array com as entradas das coordenadas x dos pontos.
 	* 	arrayY: array com as entradas das coordenadas y dos pontos.
-	* Entradas opcionais:
-	* 	raio: o raio de preenchimento dos pontos em pixel.
-	* 	bordaGrid: espessura da faixa margeando o canvas que determina
-	* 			   o limite máximo de plotagem.
-	* 	cor: a cor do ponto.
+	* 	raio (opcional): o raio de preenchimento dos pontos em pixel.
+	* 	bordaGrid (opcional): espessura da faixa margeando o canvas que determina
+	* 			   o limite máximo de plotagem, em pixel.
+	* 	cor (opcional): um string representando a cor do ponto.
+	* Descrição:
+	*	Após obter o contexto 2d do elemento Canvas na página html5, ele 
+	*	pode ser passado como entrada na função junto com as coordenadas x
+	*	em arrayX e as coordenadas y em arrayY. A função usará as coordenadas
+	* 	dadas para plotar os pontos na tela seguindo a orientação convencional
+	*	do sistema cartesiano, isto é, x crescente para direita e y crescente
+	*	para cima. 
+	*	O ponto de coordenada maxíma em x fica sobre o limite
+	*	direito da plotagem e o ponto máximo em y fica sobre o limite superior
+	*	da plotagem. 
+	*	Sem as especificações opcionais, o raio do ponto será de
+	*	2px, a margem de plotagem de 10px até a borda do canvas e a cor do
+	*	ponto preta. 
+	*	A função usa como domínio as entradas de x e o tamanho dela como
+	*	referência. Logo, y deve possuir uma quantidade igual ou superior
+	* 	a x de elementos. No caso de quantidade maior que x, os elementos
+	*	excedentes não participam do cálculo.
+	* Exemplo:
+	*	<!--Canvas para plotagem dos pontos.-->
+	*	<canvas id='canvas' width='400' height='300'></canvas>
+	*	<script>
+	*	var canvas = document.getElementById('canvas'); // Captura o canvas.
+	*	var ctx = canvas.getContext('2d'); // Extrai o contexto 2d.
+	*	var x = [1,2,3,4]; // Coordenadas x dos pontos.
+	*	var y = [3,4,2,7,8]; // Coordenadas y dos pontos. O 8 não será usado.
+	*	// Plota os pontos (1,3), (2,4), (3,2) e (4,7) na cor vermelha,
+	*	// com tamanho de 5px cada um e dentro de um limite de 20px para
+	*	// as bordas do canvas.
+	*	mat.estatistica.plotarPontos(ctx, x, y, 5, 20, 'red');
+	*	</script>	
+	* DESDE: 1.0
+	* VEJA: 
+	*	Canvas.getContext('2d'), context.save(), context.beginPath(),
+	*	context.restore(), context.arc(), context.fill(), 
+	*	context.fillStyle, mat.util.maximo().
 	*/
-	function plotarPontos(context, arrayX, arrayY, /*opcional*/raio, /*opcional*/bordaGrid, /*opcional*/cor) {
+	
+	function plotarPontos(context, arrayX, arrayY, raio, bordaGrid, cor) {
 		if (raio == null) raio = 2;
 		if (bordaGrid == null) bordaGrid = 10;
 		if (cor == null) cor = 'black';
@@ -475,19 +479,44 @@ mat.estatistica = (function(){
 		
 		context.restore();
 	}
-
+	
 	/**
-	* Função que desenha um grid em canvas.
-	* Entradas obrigatórias:
-	* 	context: contexto 2d do canvas.	
-	* Entradas opcionais:
-	* 	divisaoX: em quantas partes a dimensão horizontal será dividida.
-	* 	divisaoY: em quantas partes a dimensão vertical será dividida.
-	* 	bordaGrid: espessura da faixa que determina o espaçamento entre
-	* 		   as bordas do grid e do canvas.
-	* 	cor: a cor do ponto.
+	* Sinopse: Desenha um grid em canvas.
+	*	mat.estatistica.desenharGrid(context, divisaoX, divisaoY, borda, cor)
+	* Entrada(s):
+	*	context: contexto 2d do canvas.
+	* 	divisaoX (opcional): em quantas partes a dimensão horizontal será dividida.
+	* 	divisaoY (opcional): em quantas partes a dimensão vertical será dividida.
+	* 	borda (opcional): espessura da faixa que determina o espaçamento entre as 
+	*		bordas do grid e do canvas.
+	* 	cor (opcional): um string representando a cor das linhas.
+	* Descrição:
+	*	Após obter o contexto 2d do elemento Canvas na página html5, ele 
+	*	pode ser passado como entrada na função para ser desenhada uma
+	*	divisão em grade útil para escala de plotagem e desenhos.
+	*	Sem as especificações opcionais, um espaço interno do canvas, 
+	*	margeado por 10px da borda, será dividido por linhas pretas em 
+	*	100 retângulos (10 hor x 10 ver). A espessura da linha é de 1px
+	*	e o fundo é branco por padrão.
+	* Exemplo:
+	*	<!--Canvas para desenho do grid.-->
+	*	<canvas id='canvas' width='400' height='400'></canvas>
+	*	<script>
+	*	// Extrai o contexto 2d do canvas.
+	*	var ctx = document.getElementById('canvas').getContext('2d');
+	*	// Desenha um grid 20 x 10, com margem de 5px para a borda do
+	*	// canvas, com linhas azuis.
+	*	mat.estatistica.desenharGrid(ctx, 20, 10, 5, 'blue');
+	*	</script>	
+	* DESDE: 1.0
+	* VEJA: 
+	*	Canvas.getContext('2d'), context.save(), context.beginPath(),
+	*	context.restore(), context.fillRect(), context.stroke(), 
+	*	context.moveTo(), context.lineTo(), context.strokeStyle,
+	*	context.lineWidth.
 	*/
-	function desenharGrid(context, /*opcional*/divisaoX, /*opcional*/divisaoY, /*opcional*/borda, /*opcional*/cor) {
+	
+	function desenharGrid(context, divisaoX, divisaoY, borda, cor) {
 		if (divisaoX == null) divisaoX = 10;
 		if (divisaoY == null) divisaoY = 10;
 		if (borda == null) borda = 10;
@@ -525,19 +554,51 @@ mat.estatistica = (function(){
 	}
 
 	/**
-	* Função que plota uma reta  em canvas, dada seus coeficientes e valores de x.
-	* Entradas obrigatórias:
-	* 	context: contexto 2d do canvas.
+	* Sinopse: Plota reta em canvas.
+	*	mat.estatistica.plotarReta(context, coefLinear, coefAngular, arrayX, espessura, bordaGrid, cor)
+	* Entrada(s):
+	*	context: contexto 2d do canvas.
 	* 	coefLinear: coeficiente linear da reta.
 	* 	coefAngular: coeficiente angular da reta.
 	* 	arrayX: array com as entradas das coordenadas x dos pontos.
-	* Entradas opcionais:
-	* 	espessura: a espessura da reta em pixel.
-	* 	bordaGrid: espessura da faixa margeando o canvas que determina
-	* 		   o limite máximo de plotagem.
-	* 	cor: a cor da reta.
+	* 	espessura (opcional): a espessura da reta em pixel.
+	* 	bordaGrid (opcional): espessura da faixa margeando o canvas que determina
+	* 			   o limite máximo de plotagem, em pixel.
+	* 	cor (opcional): um string representando a cor da reta.
+	* Descrição:
+	*	Após obter o contexto 2d do elemento Canvas na página html5, ele 
+	*	pode ser passado como entrada na função junto com os coeficientes
+	*	angular e linear da reta e um conjunto representando o domínio x.
+	*	A função usará as coordenadas mínima e máxima do domínio arrayX
+	*	para marcar os extremos da plotagem, calculando os valores de y
+	*	para essas coordenadas atrávés dos coeficientes.
+	*	O ponto de coordenada maxíma em x fica sobre o canto
+	*	superior direito da plotagem. 
+	*	Sem as especificações opcionais, a espessura da reta será de
+	*	1px, a margem de plotagem de 10px até a borda do canvas e a cor da
+	*	reta preta. 
+	* Exemplo:
+	*	<!--Canvas para plotagem da reta.-->
+	*	<canvas id='canvas' width='400' height='300'></canvas>
+	*	<script>
+	*	var canvas = document.getElementById('canvas'); // Captura o canvas.
+	*	var ctx = canvas.getContext('2d'); // Extrai o contexto 2d.
+	*	// Coordenadas x do domínio (não precisam estar ordenadas).
+	*	var x = [4,1,2,3]; 
+	*	// Plota a reta y = 1 + 2x sobre o domínio real x = [1,4].
+	*	// A reta é verde e possui espessura de 3px. 
+	*	// Usa a margem default com a entrada null.
+	*	mat.estatistica.plotarReta(ctx, 1, 2, x, 3, null, 'green');
+	*	</script>	
+	* DESDE: 1.0
+	* VEJA: 
+	*	Canvas.getContext('2d'), context.save(), context.beginPath(),
+	*	context.restore(), context.stroke(), context.moveTo(), 
+	*	context.lineTo(), context.strokeStyle, context.lineWidth, 
+	*	mat.util.maximo(), mat.util.minimo().
 	*/
-	function plotarReta(context, coefLinear, coefAngular, arrayX, /*opcional*/espessura, /*opcional*/bordaGrid, /*opcional*/cor) {
+	
+	function plotarReta(context, coefLinear, coefAngular, arrayX, espessura, bordaGrid, cor) {
 		if (espessura == null) espessura = 1;
 		if (cor == null) cor = 'black';
 		if (bordaGrid == null) bordaGrid = 10;
