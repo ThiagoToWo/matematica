@@ -648,11 +648,53 @@ mat.estatistica = (function(){
 ////////////////////////////////////////////////////////////////////////
 
 // TEORIA DOS CONJUNTOS
+/**
+* Sinopse: Operações com conjuntos.
+*	mat.conjuntos
+* Retorna: 
+*	Retorna o seguinte objeto.
+*	{
+*		diferenca: diferenca, => a diferença entre conjuntos.
+*		elementosDiferentes: elementosDiferentes, => o conjunto sem duplicatas.
+*		intersecao: intersecao, => a interseção entre conjuntos.
+*		uniao: uniao => a união entre conjuntos.
+*	}
+* Descrição:
+*	Funções básicas de um elemento set, que podem ser aplicadas em arrays.
+* Exemplo:
+*	var m = mat.conjuntos; // Pode-se armazenar em uma variável para uso frequente.
+*	m.uniao([1,2,2,3,4], [3,4,5,6]); // Chama a função união.
+* DESDE: 1.0
+* VEJA: 
+*	documentação interna das funções.
+*/
+
 mat.conjuntos = (function(){
+	
 	/**
-	* Retorna um novo array com apenas um exemplar de cada elemento do
-	* array de entrada.
+	* Sinopse: Elimina duplicatas de um array.
+	*	mat.conjuntos.elementosDiferentes(array)
+	* Entrada(s):
+	*	array: um array com qualquer tipo de elemento.
+	* Saída: 
+	*	Um novo array com apenas um exemplar de cada elemento do array
+	*	de entrada.
+	* Descrição:
+	*	Dado o array de entrada, a função, atráves de um dicionário
+	*	interno armazena os elementos nas chamas que possuem nomes
+	*	iguais os valores, sobrescrevendo assim os valores repetidos.
+	*	Depois essas chaves são passadas em ordem alfanumérica para um
+	*	novo array a ser retornado.
+	*	Deve-se observar que, além do novo array estar em ordem
+	*	alfanumérica, ele é composto por representação em string dos
+	*	valores.
+	* Exemplo:
+	*	var array = [1,'x','x',4,5,3,4]; // Array com tipos diferentes.
+	*	m = mat.conjuntos;
+	*	m.elementosDiferentes(array); // Retorna ["1","3","4","5","x"].
+	* DESDE: 1.0
 	*/
+	
 	function elementosDiferentes(array) {
 		dict = {}; 	
 		for (var i = 0; i < array.length; i++) {
@@ -665,12 +707,62 @@ mat.conjuntos = (function(){
 		return novo_array;
 	}
 
-	/**Retorna a união de array1 com array2*/
+	/**
+	* Sinopse: Calcula a união entre dois arrays.
+	*	mat.conjuntos.uniao(array1, array2)
+	* Entrada(s):
+	*	array1: um array com qualquer tipo de elemento.
+	*	array2: um array com qualquer tipo de elemento.
+	* Saída: 
+	*	Retorna um array com todos os elementos de array1 e array2 sem
+	*	duplicatas.
+	* Descrição:
+	*	Dados os arrays de entrada, a função concatena-os e depois
+	*	elimina os elementos duplicados. 
+	*	Como ela usa internamente a função elementosDiferentes()
+	*	Deve-se observar que, além do novo array estar em ordem
+	*	alfanumérica, ele é composto por representação em string dos
+	*	valores.
+	* Exemplo:
+	*	//Array com tipos diferentes.
+	*	var array1 = [1,'x','x',4,5,3,4], array2 = ['x',4,67,'a'];
+	*	// Retorna ["1","3","4","5","67","x","a"].	
+	*	mat.conjuntos.uniao(array1, array2); 
+	* DESDE: 1.0
+	* VEJA: 
+	*	elementosDiferentes(), Array.concat().
+	*/
+	
 	function uniao(array1, array2) {
 		return elementosDiferentes(array1.concat(array2));
 	}
 
-	/**Retorna a interseção de array1 com array2*/
+	/**
+	* Sinopse: Calcula a interseção entre dois arrays.
+	*	mat.conjuntos.intersecao(array1, array2)
+	* Entrada(s):
+	*	array1: um array com qualquer tipo de elemento.
+	*	array2: um array com qualquer tipo de elemento.
+	* Saída: 
+	*	Retorna um array com os elementos comuns ao array1 e array2 sem
+	*	duplicatas.
+	* Descrição:
+	*	Dados os arrays de entrada, a função verifica se os elementos
+	*	de um deles está no outro. Caso esteja, ele acrescenta no novo
+	*	array a ser retornado.	
+	*	Como ela usa internamente a função elementosDiferentes()
+	*	Deve-se observar que, além do novo array estar em ordem
+	*	alfanumérica, ele é composto por representação em string dos
+	*	valores.
+	* Exemplo:
+	*	//Array com tipos diferentes.
+	*	var array1 = [1,'x','x',4,5,3,4], array2 = ['x',4,67,'a'];
+	*	mat.conjuntos.intersecao(array1, array2); // Retorna ["4","x"].	
+	* DESDE: 1.0
+	* VEJA: 
+	*	elementosDiferentes(), Array.indexOf().
+	*/
+	
 	function intersecao(array1, array2) {
 		var inter = [];
 		for (var i in array1) {
@@ -681,7 +773,33 @@ mat.conjuntos = (function(){
 		return elementosDiferentes(inter);
 	}
 
-	/**Retorna a diferença de array1 com array2*/
+	/**
+	* Sinopse: Calcula a diferença entre dois arrays.
+	*	mat.conjuntos.diferenca(array1, array2)
+	* Entrada(s):
+	*	array1: um array com qualquer tipo de elemento.
+	*	array2: um array com qualquer tipo de elemento.
+	* Saída: 
+	*	Retorna um array com os elementos que estão no array1 e não
+	*	estão no array2, sem duplicatas.
+	* Descrição:
+	*	Dados os arrays de entrada, a função verifica se os elementos
+	*	do primeiro deles está no outro. Caso não esteja, ele acrescenta
+	*	no novo	array a ser retornado.	
+	*	Como ela usa internamente a função elementosDiferentes()
+	*	Deve-se observar que, além do novo array estar em ordem
+	*	alfanumérica, ele é composto por representação em string dos
+	*	valores.
+	* Exemplo:
+	*	//Array com tipos diferentes.
+	*	var array1 = [1,'x','x',4,5,3,4], array2 = ['x',4,67,'a'];
+	*	mat.conjuntos.diferenca(array1, array2); // Retorna ["1","3","5"].
+	*	mat.conjuntos.diferenca(array2, array1); // Retorna ["67","a"].	
+	* DESDE: 1.0
+	* VEJA: 
+	*	elementosDiferentes(), Array.indexOf().
+	*/
+	
 	function diferenca(array1, array2) {
 		var dif = [];
 		for (var i in array1) {
