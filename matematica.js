@@ -962,8 +962,25 @@ mat.sistemas = (function(){
 		return [dx/d, dy/d];
 	}
 	
-	/*Retorna uma matriz identidade de ordem n
-	*Desde 1.1
+	/**
+	* Sinopse: constrói uma matriz identidade de ordem n.
+	*	mat.sistemas.I(n)
+	* Entrada(s):
+	*	n: um número inteiro representando a ordem da matriz.
+	* Saída: 
+	*	Um array bidimensional nxn com os elementos nulos, exceto 
+	*	os da diagonal principal.
+	* Descrição:
+	*	Dada a entrada n, a função cria uma matriz identidade I, onde
+	*	cada elemento I[i][j] = 0 se i != j e I[i][j] = 1 se i = j.
+	*	A ordem dessa matriz é a entrada n, isto é, uma matriz quadrada
+	*	com n linhas e n colunas.
+	* Exemplo:
+	*	// Retorna [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]].
+	*	var x = mat.sistemas.I(4); 
+	* DESDE: 1.1
+	* VEJA: 
+	*	mat.util.encher().
 	*/
 	function I(n) {
 		var I = new Array(n);
@@ -975,13 +992,35 @@ mat.sistemas = (function(){
 		return I;
 	}
 	
-	/*Escalona uma matriz
-	*Desde 1.1
+	/**
+	* Sinopse: escalona uma matriz.
+	*	mat.sistemas.escalonar(A)
+	* Entrada(s):
+	*	A: um array bidimensional mxn.
+	* Saída:
+	*	Retorna o array A escalonado.
+	* Descrição:
+	*	Dada a entrada A mxn, a função a escalona por eliminação
+	*	gaussiana. A função guarda um quadrado inicial mxm como
+	* 	uma possível matriz de coeficientes de um sistema completo
+	*	e uma diferença r = n - m, representando a quantidade de
+	*	sistemas a serem resolvidos com tais coeficientes.
+	* Exemplo:
+	*	// Inicia a matriz A.
+	*	var A = [[2, 3,-1, 5],
+	*			 [4, 4,-3, 3],
+	*			 [2,-3, 1,-1]]
+	*	// Retorna A = [[4,  4,  -3,   3],
+	*	//				[0, -5, 2.5,-2.5],
+	*	//				[0,  0,   1,   3]].
+	*	mat.sistemas.escalonar(A); 
+	* DESDE: 1.1
+	* VEJA: 
+	*	Math.abs().
 	*/
 	function escalonar(A) {
 		var n = A.length;
 		var r = A[0].length - A.length;
-		// alfa		
 		for (var i = 0; i < n - 1; i++) {
 			// Determinação do elemento central.
 			var max = i;
@@ -1000,7 +1039,7 @@ mat.sistemas = (function(){
 					A[max][k] = temp;
 				}
 			}
-			// beta			
+			// Elimina os elementos abaixo na coluna.			
 			for (var j = i + 1; j < n; j++) {				
 				if (A[j][i] != 0) {
 					var fator = -A[j][i] / A[i][i];
@@ -1010,14 +1049,14 @@ mat.sistemas = (function(){
 				}					
 			}						
 		}
-		return A;				
+		return A;
 	}
 	
 	return {
 		crammer2x2: crammer2x2,
 		crammer3x3: crammer3x3,
 		det2x2: det2x2,
-		gaussiana: gaussiana,
+		escalonar: escalonar,
 		I: I,
 		sarrus: sarrus
 	};
