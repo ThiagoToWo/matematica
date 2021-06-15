@@ -1,7 +1,7 @@
 /**
 * matematica.js 1.0, 24/05/2021
 * Autor: Thiago de O. Alves.
-* 08/06/2021 - versão 1.0.3
+* 14/06/2021 - versão 1.1
 */
 
 var mat = mat || {};
@@ -961,11 +961,60 @@ mat.sistemas = (function(){
 		);
 		return [dx/d, dy/d];
 	}
-
+	
+	/*Retorna uma matriz identidade de ordem n*/
+	function I(n) {
+		var I = new Array(n);
+		for (var i = 0; i < n; i++) {
+			I[i] = new Array(n);
+			mat.util.encher(I[i], 0);
+			I[i][i] = 1;
+		}
+		return I;
+	}
+	
+	/*Escalona uma matriz*/
+	function escalonar(A) {
+		var n = A.length;
+		var r = A[0].length - A.length;
+		// alfa		
+		for (var i = 0; i < n - 1; i++) {
+			// Determinação do elemento central.
+			var max = i;
+			a_max = Math.abs(A[i][i]);
+			for (var j = i + 1; j < n; j++) {
+				if (Math.abs(A[j][i]) > a_max) {
+					max = j;
+					a_max = Math.abs(A[j][i]);
+				}
+			}
+			// Trocas de linhas.
+			if (max != i) {
+				for (var k = i; k < n + r; k++) {
+					var temp = A[i][k];
+					A[i][k] = A[max][k];
+					A[max][k] = temp;
+				}
+			}
+			// beta			
+			for (var j = i + 1; j < n; j++) {				
+				if (A[j][i] != 0) {
+					var fator = -A[j][i] / A[i][i];
+					for (var k = i; k < n + r; k++) {
+							A[j][k] += A[i][k] * fator;
+					}					
+				}					
+			}						
+		}
+		return A;				
+	}
+	
 	return {
 		crammer2x2: crammer2x2,
 		crammer3x3: crammer3x3,
 		det2x2: det2x2,
+		gaussiana: gaussiana,
+		I: I,
 		sarrus: sarrus
 	};
 }());
@@ -1049,7 +1098,13 @@ mat.util = (function(){
 		return min;
 	}
 	
+	function encher(array, valor) {		
+		for (var i = 0; i < array.length; i++) {
+			array[i] = valor;
+		}
+	}
 	return {
+		encher: encher,
 		maximo: maximo,
 		minimo: minimo
 	};
