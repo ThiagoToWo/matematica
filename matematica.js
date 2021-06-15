@@ -962,7 +962,9 @@ mat.sistemas = (function(){
 		return [dx/d, dy/d];
 	}
 	
-	/*Retorna uma matriz identidade de ordem n*/
+	/*Retorna uma matriz identidade de ordem n
+	*Desde 1.1
+	*/
 	function I(n) {
 		var I = new Array(n);
 		for (var i = 0; i < n; i++) {
@@ -973,7 +975,9 @@ mat.sistemas = (function(){
 		return I;
 	}
 	
-	/*Escalona uma matriz*/
+	/*Escalona uma matriz
+	*Desde 1.1
+	*/
 	function escalonar(A) {
 		var n = A.length;
 		var r = A[0].length - A.length;
