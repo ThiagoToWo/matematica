@@ -1,7 +1,7 @@
 /**
 * matematica.js 1.0, 24/05/2021
 * Autor: Thiago de O. Alves.
-* 14/06/2021 - versão 1.1
+* 17/06/2021 - versão 1.2
 */
 
 var mat = mat || {};
@@ -911,12 +911,12 @@ mat.sistemas = (function(){
 	}
 
 	/**
-	* Utiliza a Regra de Crammer para resolver sistemas 3x3.
+	* Utiliza a Regra de Cramer para resolver sistemas 3x3.
 	* Tem como entradas as 3 linhas com 4 elementos da matriz extendida
 	* (incluindo as somas), le1, le2, le3.
 	* Retorna um array [x, y, z] com os valores das incógnitas x, y e z.
 	*/
-	function crammer3x3(le1, le2, le3) {
+	function cramer3x3(le1, le2, le3) {
 		var d = sarrus(
 			[le1[0], le1[1], le1[2]],
 			[le2[0], le2[1], le2[2]],
@@ -941,12 +941,12 @@ mat.sistemas = (function(){
 	}
 
 	/**
-	* Utiliza a Regra de Crammer para resolver sistemas 2x2.
+	* Utiliza a Regra de Cramer para resolver sistemas 2x2.
 	* Tem como entradas as 2 linhas com 3 elementos da matriz extendida
 	* (incluindo as somas), le1 e le2.
 	* Retorna um array [x, y] com os valores das incógnitas x e y.
 	*/
-	function crammer2x2(le1, le2) {
+	function cramer2x2(le1, le2) {
 		var d = det2x2(
 			[le1[0], le1[1]],
 			[le2[0], le2[1]]
@@ -982,6 +982,7 @@ mat.sistemas = (function(){
 	* VEJA: 
 	*	mat.util.encher().
 	*/
+	
 	function I(n) {
 		var I = new Array(n);
 		for (var i = 0; i < n; i++) {
@@ -997,8 +998,6 @@ mat.sistemas = (function(){
 	*	mat.sistemas.escalonar(A)
 	* Entrada(s):
 	*	A: um array bidimensional mxn.
-	* Saída:
-	*	Retorna o array A escalonado.
 	* Descrição:
 	*	Dada a entrada A mxn, a função a escalona por eliminação
 	*	gaussiana. A função guarda um quadrado inicial mxm como
@@ -1010,54 +1009,107 @@ mat.sistemas = (function(){
 	*	var A = [[2, 3,-1, 5],
 	*			 [4, 4,-3, 3],
 	*			 [2,-3, 1,-1]]
-	*	// Retorna A = [[4,  4,  -3,   3],
-	*	//				[0, -5, 2.5,-2.5],
-	*	//				[0,  0,   1,   3]].
+	*	// Faz A = [[4,  4,  -3,   3],
+	*	//			[0, -5, 2.5,-2.5],
+	*	//			[0,  0,   1,   3]].
 	*	mat.sistemas.escalonar(A); 
 	* DESDE: 1.1
 	* VEJA: 
 	*	Math.abs().
 	*/
-	function escalonar(A) {
-		var n = A.length;
-		var r = A[0].length - A.length;
-		for (var i = 0; i < n - 1; i++) {
+	
+	function escalonar(Amn) {
+		var m = Amn.length; // linhas.
+		var n = Amn[0].length; // colunas.
+		var sinal = 1; // sinal para o determinante.
+		for (var i = 0; i < m - 1; i++) {
 			// Determinação do elemento central.
 			var max = i;
-			a_max = Math.abs(A[i][i]);
-			for (var j = i + 1; j < n; j++) {
-				if (Math.abs(A[j][i]) > a_max) {
+			a_max = Math.abs(Amn[i][i]);
+			for (var j = i + 1; j < m; j++) {
+				if (Math.abs(Amn[j][i]) > a_max) {
 					max = j;
-					a_max = Math.abs(A[j][i]);
+					a_max = Math.abs(Amn[j][i]);
 				}
 			}
 			// Trocas de linhas.
 			if (max != i) {
-				for (var k = i; k < n + r; k++) {
-					var temp = A[i][k];
-					A[i][k] = A[max][k];
-					A[max][k] = temp;
+				for (var k = i; k < n; k++) {
+					var temp = Amn[i][k];
+					Amn[i][k] = Amn[max][k];
+					Amn[max][k] = temp;
 				}
+				sinal *= -1;
 			}
 			// Elimina os elementos abaixo na coluna.			
-			for (var j = i + 1; j < n; j++) {				
-				if (A[j][i] != 0) {
-					var fator = -A[j][i] / A[i][i];
-					for (var k = i; k < n + r; k++) {
-							A[j][k] += A[i][k] * fator;
+			for (var j = i + 1; j < m; j++) {				
+				if (Amn[j][i] != 0) {
+					var fator = -Amn[j][i] / Amn[i][i];
+					for (var k = i; k < n; k++) {
+							Amn[j][k] += Amn[i][k] * fator;
 					}					
 				}					
 			}						
 		}
-		return A;
+		return sinal;
+	}
+	
+	/*desde 1.2*/
+	function det(An) {
+		var n = An.length; // ordem.
+		var cols = An[0].length; // colunas.
+		if (n !== cols) throw new Error(An + " não é uma matriz quadrada.");
+		var sinal = escalonar(An);
+		var d = 1;
+		for (var i = 0; i < n; i++) {
+			d *= An[i][i];
+		}
+		return d * sinal;
+	}
+	
+	/*desde 1.2*/
+	function resolver(Ab) {
+		var n = Ab.length;
+		var r = 1;
+		var X = [];
+		escalonar(Ab);
+		for (var i = n - 1; i >= 0; i--) {
+			X[i] = Ab[i][n];
+			for (var j = i + 1; j <= n - 1; j++) {
+				X[i] -= Ab[i][j] * X[j];
+			}
+			X[i] /= Ab[i][i];
+		}
+		return X;
+	}
+	
+	function inversa(An) {
+		var n = An.length; // ordem.
+		var cols = An[0].length; // colunas.
+		if (n !== cols) throw new Error(An + " não é uma matriz quadrada.");
+		var inv = [];
+		for (var i = 0; i < n; i++) {
+			for (var j = 0; j < n; j++) {
+				if (i == j) {
+					An[j][n] = 1;
+				} else {
+					An[j][n] = 0;
+				}
+			}
+			inv.push(resolver(An));
+		}
+		return inv;
 	}
 	
 	return {
-		crammer2x2: crammer2x2,
-		crammer3x3: crammer3x3,
+		cramer2x2: cramer2x2,
+		cramer3x3: cramer3x3,
 		det2x2: det2x2,
+		det: det,
 		escalonar: escalonar,
 		I: I,
+		inversa: inversa,
+		resolver: resolver,
 		sarrus: sarrus
 	};
 }());
