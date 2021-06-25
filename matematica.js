@@ -1,7 +1,7 @@
 /**
 * matematica.js 1.0, 24/05/2021
 * Autor: Thiago de O. Alves.
-* 17/06/2021 - versão 1.2
+* 24/06/2021 - versão 1.3
 */
 
 var mat = mat || {};
@@ -889,12 +889,53 @@ mat.quadratica = (function(){
 ///////////////////////////////////////////////////////////////////////
 
 //SISTEMAS E DETERMINANTES
+/**
+* Sinopse: Cálculos associados a sistemas lineares.
+*	mat.sistemas
+* Retorna: 
+*	Retorna o seguinte objeto.
+*	{
+*		cramer: cramer, => resolve sistemas lineares 2x2 ou 3x3.
+*		det2x2: det2x2, => calcula determinante 2x2.
+*		det: det, => calcula determinantes.
+*		escalonar: escalonar, => cescalona matrizes.
+*		I: I, => cria uma matriz identidade.
+*		inversa: inversa, => calcula a inversa de uma matriz.
+*		resolver: resolver, => resolve um sistema linear.
+*		sarrus: sarrus => calcula determinante 3x3.
+*	}
+* Exemplo:
+*	var m = mat.sistemas; // Pode-se armazenar em uma variável para uso frequente.
+*	m.sarrus([1,2,3], [0,-2,1], [5,1,1]); // Chama a função sarrus.
+* DESDE: 1.0
+* VEJA: 
+*	documentação interna das funções.
+*/
+
 mat.sistemas = (function(){
+	
 	/**
-	* Retorna o determinante de uma matriz 3x3 usando a Regra de Sarrus.
-	* Tem como entrada arrays de 3 elementos representando as três linhas
-	* da matriz, l1, l2 e l3.
+	* Sinopse: Calcula o determinante de uma matriz 3x3.
+	*	mat.sistemas.sarrus(l1, l2, l3)
+	* Entrada(s):
+	*	l1: array numérico representando a 1a linha.
+	*	l2: array numérico representando a 2a linha.
+	*	l3: array numérico representando a 3a linha.
+	* Saída: 
+	*	Retorna um número representando o determinante.
+	* Descrição:
+	*	Retorna o determinante de uma matriz 3x3 usando a Regra
+	*	de Sarrus. Tem como entrada arrays de 3 elementos 
+	*	representando as três linhas da matriz, l1, l2 e l3. Se 
+	*	tiver mais de três elementos em uma das entradas, eles 
+	*	não serão considerados no cálculo.
+	* Exemplo:
+	*	// Inicia o(s) argumento(s). 
+	*	var l1 = [2, 3,-1], l2 = [4, 4,-3], l3 = [2,-3, 1]; 
+	*	mat.sistemas.sarrus(l1, l2, l3); // Retorna -20.
+	* DESDE: 1.1
 	*/
+	
 	function sarrus(l1, l2, l3) {
 		var principal = l1[0]*l2[1]*l3[2] + l1[1]*l2[2]*l3[0] + l1[2]*l2[0]*l3[1];
 		var secundaria = l1[2]*l2[1]*l3[0] + l1[0]*l2[2]*l3[1] + l1[1]*l2[0]*l3[2];
@@ -902,66 +943,109 @@ mat.sistemas = (function(){
 	}
 
 	/**
-	* Retorna o determinante de uma matriz 2x2.
-	* Tem como entrada dois arrays de dois elementos cada, l1 e l2,
-	* representando as linhas da matriz.
+	* Sinopse: Calcula o determinante de uma matriz 2x2.
+	*	mat.sistemas.det2x2(l1, l2)
+	* Entrada(s):
+	*	l1: array numérico representando a 1a linha.
+	*	l2: array numérico representando a 2a linha.
+	* Saída: 
+	*	Retorna um número representando o determinante.
+	* Descrição:
+	*	Retorna o determinante de uma matriz 2x2 usando a definição.
+	*	Tem como entrada arrays de 2 elementos representando as duas
+	*	linhas da matriz, l1, l2. Se tiver mais de dois elementos em
+	*	uma das entradas, eles não serão considerados no cálculo.
+	* Exemplo:
+	*	// Inicia o(s) argumento(s). 
+	*	var l1 = [2, 3], l2 = [4, 4]; 
+	*	mat.sistemas.det2x2(l1, l2); // Retorna -4.
+	* DESDE: 1.1
 	*/
+	
 	function det2x2(l1, l2) {
 		return l1[0]*l2[1] - l1[1]*l2[0];
 	}
 
 	/**
-	* Utiliza a Regra de Cramer para resolver sistemas 3x3.
-	* Tem como entradas as 3 linhas com 4 elementos da matriz extendida
-	* (incluindo as somas), le1, le2, le3.
-	* Retorna um array [x, y, z] com os valores das incógnitas x, y e z.
+	* Sinopse: Soluciona um sistema linear 2x2 ou 3x3.
+	*	mat.sistemas.caramer(la1, la2, la3)
+	* Entrada(s):
+	*	la1: array numérico.
+	*	la2: array numérico.
+	*	la3 (opcional): array numérico.
+	* Saída: 
+	*	Retorna um array com a solução do sistema linear ou uma exceção
+	*	caso a entrada tenha um número diferente de 2 ou 3 argumentos.
+	* Descrição:
+	*	Utiliza a Regra de Cramer para resolver sistemas 2x2 ou 3x3.
+	* 	Tem como entradas 2 arrays de 3 elementos ou 3 arrays com 4
+	*	elementos, cada uma representando as linhas da matriz aumentada
+	*	associada ao sistema, la1, la2 e/ou la3. Se for para resolver um 
+	*	sistema de duas equações e duas incógnitas (2x2), entrar la1 e
+	*	la2. Ao entrar la3, a função resolve o sistema 3x3.
+	* 	É Retornado um array [x, y(, z)] com os valores das incógnitas
+	*	x, y (e z). Valores excedentes nos arrays de entrada não são
+	*	contabilizados.
+	* Exemplo:
+	*	// Resolveremos os sistema
+	*	//  x - 2y = 10	
+	*	//  -3x - y = -100
+	*	// e
+	*	//  2x + 3y - z = 5
+	*	// 	4x + 4y - 3z = 3
+	*	//  2x - 3y + z = -1
+	*	var la1 = [1,-2,10], la2 = [-3,-1,-100]; // Inicia o(s) argumento(s). 
+	*	mat.sistemas.cramer(la1, la2); // Retorna [30,10].
+	*	// Inicia o(s) argumento(s).
+	*	var la1 = [2,3,-1,5], la2 = [4,4,-3,3], la3 = [2,-3,1,-1]; 
+	*	mat.sistemas.cramer(la1, la2, la3); // Retorna [1,2,3].
+	* DESDE: 1.3
+	* VEJA: 
+	*	det2x2(), sarrus().
 	*/
-	function cramer3x3(le1, le2, le3) {
-		var d = sarrus(
-			[le1[0], le1[1], le1[2]],
-			[le2[0], le2[1], le2[2]],
-			[le3[0], le3[1], le3[2]]
-		);
-		var dx = sarrus(
-			[le1[3], le1[1], le1[2]],
-			[le2[3], le2[1], le2[2]],
-			[le3[3], le3[1], le3[2]]
-		);
-		var dy = sarrus(
-			[le1[0], le1[3], le1[2]],
-			[le2[0], le2[3], le2[2]],
-			[le3[0], le3[3], le3[2]]
-		);
-		var dz = sarrus(
-			[le1[0], le1[1], le1[3]],
-			[le2[0], le2[1], le2[3]],
-			[le3[0], le3[1], le3[3]]
-		);
-		return [dx/d, dy/d, dz/d];
+	
+	function cramer(le1, le2, le3) {
+		if (arguments.length == 2) {
+			var d = det2x2(
+				[le1[0], le1[1]],
+				[le2[0], le2[1]]
+			);
+			var dx = det2x2(
+				[le1[2], le1[1]],
+				[le2[2], le2[1]]
+			);
+			var dy = det2x2(
+				[le1[0], le1[2]],
+				[le2[0], le2[2]]
+			);
+			return [dx/d, dy/d];
+		} else if (arguments.length == 3) {
+			var d = sarrus(
+				[le1[0], le1[1], le1[2]],
+				[le2[0], le2[1], le2[2]],
+				[le3[0], le3[1], le3[2]]
+			);
+			var dx = sarrus(
+				[le1[3], le1[1], le1[2]],
+				[le2[3], le2[1], le2[2]],
+				[le3[3], le3[1], le3[2]]
+			);
+			var dy = sarrus(
+				[le1[0], le1[3], le1[2]],
+				[le2[0], le2[3], le2[2]],
+				[le3[0], le3[3], le3[2]]
+			);
+			var dz = sarrus(
+				[le1[0], le1[1], le1[3]],
+				[le2[0], le2[1], le2[3]],
+				[le3[0], le3[1], le3[3]]
+			);
+			return [dx/d, dy/d, dz/d];
+		} else {
+			throw new Error('a função deve ter dois ou três argumentos.')
+		}		
 	}
 
-	/**
-	* Utiliza a Regra de Cramer para resolver sistemas 2x2.
-	* Tem como entradas as 2 linhas com 3 elementos da matriz extendida
-	* (incluindo as somas), le1 e le2.
-	* Retorna um array [x, y] com os valores das incógnitas x e y.
-	*/
-	function cramer2x2(le1, le2) {
-		var d = det2x2(
-			[le1[0], le1[1]],
-			[le2[0], le2[1]]
-		);
-		var dx = det2x2(
-			[le1[2], le1[1]],
-			[le2[2], le2[1]]
-		);
-		var dy = det2x2(
-			[le1[0], le1[2]],
-			[le2[0], le2[2]]
-		);
-		return [dx/d, dy/d];
-	}
-	
 	/**
 	* Sinopse: constrói uma matriz identidade de ordem n.
 	*	mat.sistemas.I(n)
@@ -969,7 +1053,7 @@ mat.sistemas = (function(){
 	*	n: um número inteiro representando a ordem da matriz.
 	* Saída: 
 	*	Um array bidimensional nxn com os elementos nulos, exceto 
-	*	os da diagonal principal.
+	*	os da diagonal principal, onde os elementos são iguais a 1.
 	* Descrição:
 	*	Dada a entrada n, a função cria uma matriz identidade I, onde
 	*	cada elemento I[i][j] = 0 se i != j e I[i][j] = 1 se i = j.
@@ -994,16 +1078,18 @@ mat.sistemas = (function(){
 	}
 	
 	/**
-	* Sinopse: escalona uma matriz.
+	* Sinopse: Escalona uma matriz.
 	*	mat.sistemas.escalonar(A)
 	* Entrada(s):
-	*	A: um array bidimensional mxn.
+	*	A: um array numérico bidimensional mxn.
+	* Saída:
+	*	Retorna 1 se houve 0 ou um número par de trocas de linhas,
+	*	ou -1 se houve um número ímpar de trocas de linhas no
+	*	escalonamento.
 	* Descrição:
-	*	Dada a entrada A mxn, a função a escalona por eliminação
-	*	gaussiana. A função guarda um quadrado inicial mxm como
-	* 	uma possível matriz de coeficientes de um sistema completo
-	*	e uma diferença r = n - m, representando a quantidade de
-	*	sistemas a serem resolvidos com tais coeficientes.
+	*	Dada a entrada A m x n, a função a escalona por eliminação
+	*	gaussiana. O valor de retorno é o sinal usado no cálculo
+	*	do determinante quando houver trocas de linhas.
 	* Exemplo:
 	*	// Inicia a matriz A.
 	*	var A = [[2, 3,-1, 5],
@@ -1054,7 +1140,35 @@ mat.sistemas = (function(){
 		return sinal;
 	}
 	
-	/*desde 1.2*/
+	/**
+	* Sinopse: Calcula o determinante de uma matriz.
+	*	mat.sistemas.det(An)
+	* Entrada(s):
+	*	An: um array numérico bidimensional n x n.
+	* Saída: 
+	*	Retorna um número, determinante do array de entrada
+	*	ou uma exceção caso a entrada não seja n x n.
+	* Descrição:
+	*	Dada a matriz de entrada, a função a escalona e usa o sinal,
+	*	en caso de trocas de linhas nesse processo, para calcular o
+	*	determinante da matriz quadrada através do produto da diagonal
+	*	matriz da matriz triangular.
+	*	Observe que, após passar pela função, a matriz fica na forma 
+	*	escalonada.
+	* Exemplo:
+	*	// Inicia a matriz A.
+	*	var An = [[2, 3,-1],
+	*			 [4, 4,-3],
+	*			 [2,-3, 1]];
+	*	// Faz An = [[4,  4,  -3],
+	*	//			 [0, -5, 2.5],
+	*	//			 [0,  0,   1]].
+	*	mat.sistemas.det(An); // Retorna -20.
+	* DESDE: 1.2
+	* VEJA: 
+	*	escalonar().
+	*/
+	
 	function det(An) {
 		var n = An.length; // ordem.
 		var cols = An[0].length; // colunas.
@@ -1067,7 +1181,36 @@ mat.sistemas = (function(){
 		return d * sinal;
 	}
 	
-	/*desde 1.2*/
+	/**
+	* Sinopse: Resolve um sistema de equações lineares.
+	*	mat.sistemas.resolver(Ab)
+	* Entrada(s):
+	*	Ab: um array numérico bidimensional representando a matriz
+	*	aumentada do sistema linear.
+	* Saída:
+	*	Retorna um array com a solução do sistema linear.
+	* Descrição:
+	*	A entrada Ab é formada pela matriz n x n dos coeficientes
+	*	e a última coluna é a das constantes do sistema. A função
+	*	a escalona por eliminação gaussiana essa matriz aumentada
+	*	e faz o cálculo dos valores da solução por retro substituição.
+	*	A solução tem o formato [x1,x2,...,xn].
+	*	Observe que, após passar pela função, a matriz fica na forma 
+	*	escalonada.	
+	* Exemplo:
+	*	// Inicia a matriz A.
+	*	var Ab = [[2, 3,-1, 5],
+	*			  [4, 4,-3, 3],
+	*			  [2,-3, 1,-1]]
+	*	// Faz Ab = [[4,  4,  -3,   3],
+	*	//			 [0, -5, 2.5,-2.5],
+	*	//			 [0,  0,   1,   3]].
+	*	mat.sistemas.resolver(Ab); // Retorna [1,2,3].
+	* DESDE: 1.2
+	* VEJA: 
+	*	escalonar().
+	*/
+	
 	function resolver(Ab) {
 		var n = Ab.length;
 		var r = 1;
@@ -1082,6 +1225,34 @@ mat.sistemas = (function(){
 		}
 		return X;
 	}
+	
+	/**
+	* Sinopse: Calcula a inversa de uma matriz.
+	*	mat.sistemas.inversa(An)
+	* Entrada(s):
+	*	An: um array numérico bidimensional n x n.
+	* Saída: 
+	*	Retorna um array, inversa da matriz de entrada
+	*	ou uma exceção caso a entrada não seja n x n.
+	* Descrição:
+	*	Dada a matriz de entrada, a função a aumenta concatenando
+	*	uma matriz identidade de mesma ordem n e calcula sua inversa
+	*	usando a função resolver().
+	*	Observe que, após passar pela função, a matriz fica na forma 
+	*	escalonada.
+	* Exemplo:
+	*	// Inicia a matriz A.
+	*	var An = [[2, 3,-1],
+	*			 [4, 4,-3],
+	*			 [2,-3, 1]];
+	*	// Retorna An = [[4,  4,  -3],
+	*	//			 	 [0, -5, 2.5],
+	*	//			 	 [0,  0,   1]].
+	*	mat.sistemas.inversa(An);.
+	* DESDE: 1.?
+	* VEJA: 
+	*	resolver().
+	*/
 	
 	function inversa(An) {
 		var n = An.length; // ordem.
@@ -1102,8 +1273,7 @@ mat.sistemas = (function(){
 	}
 	
 	return {
-		cramer2x2: cramer2x2,
-		cramer3x3: cramer3x3,
+		cramer: cramer,
 		det2x2: det2x2,
 		det: det,
 		escalonar: escalonar,
