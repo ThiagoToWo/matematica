@@ -821,22 +821,80 @@ mat.conjuntos = (function(){
 ////////////////////////////////////////////////////////////////////////
 
 // FUNÇÃO QUADRÁTICA
+/**
+* Sinopse: Cálculos associados a função quadrática.
+*	mat.quadratica
+* Retorna: 
+*	Retorna o seguinte objeto.
+*	{
+*		delta: delta, => o discriminante da função quadrática.
+*		Quadratica: Quadratica, => classe função quadrática.
+*		raizes: raizes, => calcula as raízes da função quadrática.
+*		vertice: vertice => calcula o vérticeda função quadrática.
+*	}
+* Descrição:
+*	Permite solucionar uma função e encontrar seus pontos importantes.
+* Exemplo:
+*	var m = mat.quadratica; // Pode-se armazenar em uma variável para uso frequente.
+*	m.raizes(1, -5, 6); // Chama a função raízes.
+*	var c = new m.Quadratica(1, -5, 6); // Instancia uma classe Quadratica do módulo.
+* DESDE: 1.0
+* VEJA: 
+*	documentação interna das funções.
+*/
+
 mat.quadratica = (function(){
+	
 	/**
-	* Retorna o discriminate da função quadrática f(x) = ax² + bx + c, 
-	* dados os coeficientes a, b e c.
+	* Sinopse: Calcula o discriminate da função quadrática.
+	*	mat.quadratica.delta(a, b, c)
+	* Entrada(s):
+	*	a: número real representando o coeficiente a.
+	*	b: número real representando o coeficiente b.
+	*	c: número real representando o coeficiente c.
+	* Saída: 
+	*	Retorna um número real, o discriminate da função quadrática.
+	* Descrição:
+	*	Dados os coeficientes a, b e c da função quadrática f(x) = ax² + bx + c, 
+	* 	a função retorna o valor de b² - 4ac.
+	* Exemplo:
+	*	var a = 1, b = 5, c = -6; // Inicia o(s) argumento(s). 
+	*	mat.quadratica.delta(a, b, c); // Retorna 49.
+	* DESDE: 1.0
 	*/
+	
 	function delta(a, b, c) {
 		return b * b - 4 * a * c;
 	}
 
 	/**
-	* Retorna as raízes complexas da função quadrática f(x) = ax² + bx + c,
-	* dados os seus coeficientes a, b e c como entradas.
-	* O valor retornado é um array [[u1, v1], [u2, v2]], onde u1 e u2 são as
-	* partes reais e v1 e v2 as partes imaginárias da raízes x1 = u1 + v1 * i
-	* e x2 = u2 + v2 * i.
+	* Sinopse: Calcula as raizes da função quadrática.
+	*	mat.quadratica.raizes(a, b, c)
+	* Entrada(s):
+	*	a: número real representando o coeficiente a.
+	*	b: número real representando o coeficiente b.
+	*	c: número real representando o coeficiente c.
+	* Saída: 
+	*	Retorna um array bidimensional com as partes reais e imaginárias
+	*	das raízes da função quadrática.
+	* Descrição:
+	*	Dados os coeficientes a, b e c da função quadrática f(x) = ax² + bx + c, 
+	* 	a função retorna um array [[u1, v1], [u2, v2]], onde u1 e u2 são as
+	* 	partes reais e v1 e v2 as partes imaginárias da raízes x1 = u1 + v1 * i
+	* 	e x2 = u2 + v2 * i.
+	* Exemplo:
+	*	var a = 1, b = 5, c = -6; // Inicia o(s) argumento(s). 
+	*	// Retorna [[1,0],[-6,0]], i.e., x1 = 1 e x2 = -6.
+	*	mat.quadratica.raizes(a, b, c); 
+	*	var a = 5, b = 8, c = 5; // Inicia o(s) argumento(s). 
+	*	// Retorna [[-0.8,0.6],[-0.8,-0.6]], i.e., x1 = -0.8 + 0.6 * i e 
+	*	// x2 = -0.8 - 0.6 * i.
+	*	mat.quadratica.raizes(a, b, c); 
+	* DESDE: 1.0
+	* VEJA: 
+	*	delta().
 	*/
+	
 	function raizes(a, b, c) {
 		var d = delta(a, b, c);
 		var x1;
@@ -852,11 +910,31 @@ mat.quadratica = (function(){
 	}
 
 	/**
-	* Retorna as coordenadas do vértice da função quadrática f(x) = ax² + bx + c,
-	* dados os seus coeficientes a, b e c como entradas.
-	* O valor retornado é um array [x, y] com a abscissa x e a ordenada y do vértice
-	* da parábola.
+	* Sinopse: Calcula as coordenadas do vértice da função quadrática.
+	*	mat.quadratica.vertice(a, b, c)
+	* Entrada(s):
+	*	a: número real representando o coeficiente a.
+	*	b: número real representando o coeficiente b.
+	*	c: número real representando o coeficiente c.
+	* Saída: 
+	*	Retorna um array com as coordenadas do vértice da função quadrática.
+	* Descrição:
+	*	Retorna as coordenadas do vértice da função quadrática f(x) = ax² + bx + c,
+	* 	dados os seus coeficientes a, b e c como entradas.
+	* 	O valor retornado é um array [x, y] com a abscissa x e a ordenada y do vértice
+	* 	da parábola.
+	* Exemplo:
+	*	var a = 1, b = 5, c = -6; // Inicia o(s) argumento(s). 	*	
+	*	mat.quadratica.vertice(a, b, c); // Retorna [-2.5,-12.25].
+	*	var a = 5, b = 8, c = 5; // Inicia o(s) argumento(s).
+	*	mat.quadratica.raizes(a, b, c); // Retorna [-0.8,1.8].
+	*	var a = 1, b = -2, c = -1; // Inicia o(s) argumento(s).
+	*	mat.quadratica.raizes(a, b, c); // Retorna [1,-2].
+	* DESDE: 1.0
+	* VEJA: 
+	*	delta().
 	*/
+	
 	function vertice(a, b, c) {
 		var x = -b / (2 * a);
 		var y = -delta(a, b, c) / (4 * a);
@@ -864,9 +942,32 @@ mat.quadratica = (function(){
 	}
 
 	/**
-	* Um objeto que empacota todos os atributos e funções de uma função quadrática, 
-	* calculando e retornando de forma prática todas as informações mais úteis.
+	* Sinopse: classe com os atributos e funções da função quadrática.
+	*	new mat.quadratica.Quadratica(a, b, c)
+	* Entrada(s):
+	*	a: número real representando o coeficiente a.
+	*	b: número real representando o coeficiente b.
+	*	c: número real representando o coeficiente c.
+	* Descrição:
+	*	Uma classe que empacota todos os atributos e funções de uma função quadrática, 
+	* 	calculando e retornando de forma prática todas as informações mais úteis como
+	*	os coeficientes, as raízes separadas, o discriminante, e cada coordenada do
+	*	vértice.
+	* Exemplo:
+	*	var q = new mat.quadratica.Quadratica(1, 2, -3); // cria uma função quadrática. 
+	*	q.a; // Retorna o coeficiente a = 1.
+	*	q.b; // Retorna o coeficiente b = 2.
+	*	q.c; // Retorna o coeficiente c = -3.
+	*	q.delta; // Retorna o discriminante Δ = 16.
+	*	q.x1; // Retorna uma das raízes x1 = 1.
+	*	q.x2; // Retorna uma das raízes x2 = -3.
+	*	q.xv; // Retorna a abscissado vértice x = -1.
+	*	q.yv; // Retorna a ordenada do vértice y = -4.
+	* DESDE: 1.0
+	* VEJA: 
+	*	delta(), raizes(), vertice().
 	*/
+	
 	function Quadratica(a, b, c) {
 		this.a = a; // Coeficiente a.
 		this.b = b; // Coeficiente b.
@@ -874,8 +975,8 @@ mat.quadratica = (function(){
 		this.delta = delta(this.a, this.b, this.c); // O discriminante.
 		this.x1 = raizes(this.a, this.b, this.c)[0]; // Uma raíz.
 		this.x2 = raizes(this.a, this.b, this.c)[1]; // A outra raíz.
-		this.xv = vetice(this.a, this.b, this.c)[0]; // A coordenada x do vértice.
-		this.yv = vetice(this.a, this.b, this.c)[1]; // A coordenada y do vértice.
+		this.xv = vertice(this.a, this.b, this.c)[0]; // A coordenada x do vértice.
+		this.yv = vertice(this.a, this.b, this.c)[1]; // A coordenada y do vértice.
 	}
 	
 	return {
@@ -1215,13 +1316,19 @@ mat.sistemas = (function(){
 		var n = Ab.length;
 		var r = 1;
 		var X = [];
-		escalonar(Ab);
-		for (var i = n - 1; i >= 0; i--) {
-			X[i] = Ab[i][n];
-			for (var j = i + 1; j <= n - 1; j++) {
-				X[i] -= Ab[i][j] * X[j];
+		var sis = [];
+		for (var i = 0; i < n; i++) {
+			for (var j = 0; j < n + r; j++) {
+				sis[i][j] = Ab[i][j];
 			}
-			X[i] /= Ab[i][i];
+		}
+		escalonar(sis);
+		for (var i = n - 1; i >= 0; i--) {
+			X[i] = sis[i][n];
+			for (var j = i + 1; j <= n - 1; j++) {
+				X[i] -= sis[i][j] * X[j];
+			}
+			X[i] /= sis[i][i];
 		}
 		return X;
 	}
@@ -1268,7 +1375,7 @@ mat.sistemas = (function(){
 				}
 			}
 			inv.push(resolver(An));
-		}
+		}		
 		return inv;
 	}
 	
@@ -1368,6 +1475,7 @@ mat.util = (function(){
 			array[i] = valor;
 		}
 	}
+	
 	return {
 		encher: encher,
 		maximo: maximo,
