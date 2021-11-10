@@ -1,7 +1,7 @@
 /**
 * matematica.js 1.0, 24/05/2021
 * Autor: Thiago de O. Alves.
-* 24/06/2021 - versão 1.3
+* 10/11/2021 - versão 1.4
 */
 
 var mat = mat || {};
@@ -1429,8 +1429,53 @@ mat.geometria = (function(){
 		return a;
 	}
 
+	/**
+	* Sinopse: Calcula a hipotenusa.
+	*	mat.geometria.hipotenusa(cat1, cat2)
+	* Entrada(s):
+	*	cat1: um número real com o valor de um cateto.
+	*	cat2: um número real com o valor do outro cateto.
+	* Saída: 
+	*	Dado os catetos cat1 e cat2, retorna o valor da hipotenusa
+	*	do triângulo retângulo usando o teorema de pitágoras
+	*	(hipotenusa)² = (cateto1)² + (cateto2)².		
+	* Exemplo: 
+	*	mat.geometria.hipotenusa(3, 4); // Retorna 5.
+	* DESDE: 1.4
+	* VEJA:
+	*	Math.sqrt();
+	*/
+	
+	function hipotenusa(cat1, cat2) {
+		return Math.sqrt(cat1 * cat1 + cat2 * cat2);
+	}
+	
+	/**
+	* Sinopse: Calcula um cateto.
+	*	mat.geometria.cateto(hip, cat)
+	* Entrada(s):
+	*	hip: um número real com o valor da hipotenusa.
+	*	cat: um número real com o valor de um cateto.
+	* Saída: 
+	*	Dado o cateto e a hipotenusa, retorna o valor do
+	*	outro cateto do triângulo retângulo usando o 
+	*	teorema de pitágoras
+	*	(cateto1)² = (hipotenusa)² - (cateto2)².		
+	* Exemplo: 
+	*	mat.geometria.cateto(10, 8); // Retorna 6.
+	* DESDE: 1.4
+	* VEJA:
+	*	Math.sqrt();
+	*/
+	
+	function cateto(hip, cat) {
+		return Math.sqrt(hip * hip - cat * cat);
+	}
+	
 	return {
-		ternoPit: ternoPit
+		cateto: cateto,
+		hipotenusa: hipotenusa,
+		ternoPit: ternoPit		
 	};
 }());
 ///////////////////////////////////////////////////////////////////////
