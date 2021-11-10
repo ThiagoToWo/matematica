@@ -1394,14 +1394,29 @@ mat.sistemas = (function(){
 
 //GEOMETRIA
 mat.geometria = (function(){
+	
 	/**
-	* Colocando como entrada n, a função retornda um array bidimensional
-	* onde cada linha [a, b, c] é um terno pitagórico primitivo,
-	* com a e b catetos e c a hipotenusa. 
-	* A função utiliza parâmetros internos x e y primos entre si, com x
-	* variando de 2 a n, inclusive, y < x e apenas um dos dois par. Desta
-	* forma temos cada linha [a, b, c] = [x² - y², 2xy, x² + y²].
+	* Sinopse: Retorna uma lista de ternos pitagóricos.
+	*	mat.geometria.ternoPit(n)
+	* Entrada(s):
+	*	n: inteiro >= 2 relacionado ao tamanho da lista.
+	* Saída: 
+	*	Retorna uma lista com n - 1 arrays com ternos pitagóricos [a, b, c].
+	* Descrição:
+	*	Colocando como entrada n, a função retorna um array bidimensional
+	* 	onde cada linha [a, b, c] é um terno pitagórico primitivo,
+	* 	com a e b catetos e c a hipotenusa.	A função utiliza parâmetros 
+	*	internos x e y primos entre si, com x variando de 2 a n, inclusive,
+	*	y < x e apenas um dos dois par. Desta forma temos cada linha 
+	*	[a, b, c] = [x² - y², 2xy, x² + y²].
+	* Exemplo:
+	*	// Retorna [[3,4,5],[5,12,13],[15,8,17],[7,24,25],[21,20,29],[9,40,41]].
+	*	mat.geometria.ternoPit(5); 
+	* DESDE: 1.3
+	* VEJA: 
+	*	mat.aritmetica.mdc()
 	*/
+	
 	function ternoPit(n) {
 		var a = [];
 		for (var x = 2; x <= n; x++) {
@@ -1422,7 +1437,20 @@ mat.geometria = (function(){
 
 //ARITMÉTICA
 mat.aritmetica = (function(){
-	/**Retorna o máximo divisor comum entre os inteiros m e n.*/
+	
+	/**
+	* Sinopse: Calcula o mdc de dois inteiros.
+	*	mat.aritmetica.mdc(m, n)
+	* Entrada(s):
+	*	m: um número inteiro.
+	*	n: um número inteiro.
+	* Saída: 
+	*	Retorna o máximo divisor comum de m e n.
+	* Exemplo: 
+	*	mat.aritmetica.mdc(84, 60); // Retorna 12.
+	* DESDE: 1.3
+	*/
+	
 	function mdc(m, n) {
 		if (m < 0) m *= -1;
 		if (n < 0) n *= -1;
@@ -1448,7 +1476,20 @@ mat.aritmetica = (function(){
 
 //FUNÇÕES ÚTEIS
 mat.util = (function(){
-	/**Retorna o elemento máximo do array*/
+	
+	/**
+	* Sinopse: Retorna o elemento máximo do array.
+	*	mat.util.maximo(array)
+	* Entrada(s):
+	*	array: um array numérico unidimensional.
+	* Saída: 
+	*	Rerorna maior número, elemento do array.
+	* Exemplo:
+	*	var a = [23,2,5.6,46,1,78,1,16,4,9,15]; // Inicia o(s) argumento(s). 
+	*	mat.util.maximo(a); // Retorna 78.
+	* DESDE: 1.0
+	*/
+	
 	function maximo(array) {
 		var max = array[0];
 		
@@ -1459,7 +1500,19 @@ mat.util = (function(){
 		return max;
 	}
 
-	/**Retorna o elemento mínimo do array*/
+	/**
+	* Sinopse: Retorna o elemento mínimo do array.
+	*	mat.util.minimo(array)
+	* Entrada(s):
+	*	array: um array numérico unidimensional.
+	* Saída: 
+	*	Rerorna menor número, elemento do array.
+	* Exemplo:
+	*	var a = [23,2,5.6,46,1,78,1,16,4,9,15]; // Inicia o(s) argumento(s). 
+	*	mat.util.minimo(a); // Retorna 1.
+	* DESDE: 1.0
+	*/
+	
 	function minimo(array) {
 		var min = array[0];
 		
@@ -1469,6 +1522,27 @@ mat.util = (function(){
 		
 		return min;
 	}
+	
+	/**
+	* Sinopse: Preenche um array.
+	*	mat.util.encher(array, valor)
+	* Entrada(s):
+	*	array: um array unidimensional de tamanho definido.
+	*	valor(opcional): um valor de qualquer tipo.
+	* Descrição:
+	*	Dado um array A = [...] de qualquer tamanho e um valor v, 
+	*	a função preenche todas as posições do array com v, 
+	*	transformando-o em A = [v,...,v]. Se não for passado
+	*	o parâmetro v, A se tranforma em um array de mesmo tamanho,
+	*	porém vazio (todos os elementos undefined).
+	* Exemplo:
+	*	var A = new Array(4); // Cria um array de tamanho 4. 
+	*	mat.util.encher(A, 5); // Faz A = [5,5,5,5].
+	*	mat.util.encher(A, 't'); // Faz A = ['t','t','t','t'].
+	*	mat.util.encher(A, false); // Faz A = [false,false,false,false].
+	*	mat.util.encher(A,); // Faz A = [,,,].
+	* DESDE: 1.1
+	*/
 	
 	function encher(array, valor) {		
 		for (var i = 0; i < array.length; i++) {
