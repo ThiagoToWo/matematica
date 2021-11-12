@@ -1393,6 +1393,25 @@ mat.sistemas = (function(){
 ///////////////////////////////////////////////////////////////////////
 
 //GEOMETRIA
+/**
+* Sinopse: Cálculos de geometria.
+*	mat.geometria
+* Retorna: 
+*	Retorna o seguinte objeto.
+*	{
+*		cateto: cateto, => calcula o cateto.
+*		hipotenusa: hipotenusa, => calcula a hipotenusa
+*		ternoPit: ternoPit => retorna lista de ternos pitagóricos	
+*	}
+* Exemplo:
+*	var m = mat.geometria; // Pode-se armazenar em uma variável para uso frequente.
+*	m.hipotenusa(3, 4); // Chama a função hipotenusa.
+*	m.ternoPit(5); // Chama a função ternoPit.
+* DESDE: 1.0
+* VEJA: 
+*	documentação interna das funções.
+*/
+
 mat.geometria = (function(){
 	
 	/**
@@ -1430,7 +1449,7 @@ mat.geometria = (function(){
 	}
 
 	/**
-	* Sinopse: Calcula a hipotenusa.
+	* Sinopse: Calcula a hipotenusa de um triângulo retângulo.
 	*	mat.geometria.hipotenusa(cat1, cat2)
 	* Entrada(s):
 	*	cat1: um número real com o valor de um cateto.
@@ -1451,7 +1470,7 @@ mat.geometria = (function(){
 	}
 	
 	/**
-	* Sinopse: Calcula um cateto.
+	* Sinopse: Calcula um cateto de um triângulo retângulo.
 	*	mat.geometria.cateto(hip, cat)
 	* Entrada(s):
 	*	hip: um número real com o valor da hipotenusa.
@@ -1481,6 +1500,22 @@ mat.geometria = (function(){
 ///////////////////////////////////////////////////////////////////////
 
 //ARITMÉTICA
+/**
+* Sinopse: Cálculos de aritmética.
+*	mat.aritmetica
+* Retorna: 
+*	Retorna o seguinte objeto.
+*	{
+*		mdc: mdc
+*	}
+* Exemplo:
+*	var m = mat.mdc; // Pode-se armazenar em uma variável para uso frequente.
+*	m.mdc(12, 60); // Chama a função mdc.
+* DESDE: 1.0
+* VEJA: 
+*	documentação interna das funções.
+*/
+
 mat.aritmetica = (function(){
 	
 	/**
@@ -1520,6 +1555,24 @@ mat.aritmetica = (function(){
 ///////////////////////////////////////////////////////////////////////
 
 //FUNÇÕES ÚTEIS
+/**
+* Sinopse: Funções úteis.
+*	mat.util
+* Retorna: 
+*	Retorna o seguinte objeto.
+*	{
+*		encher: encher, => enche um array com um valor.
+*		maximo: maximo, => encontra o máximo de um array.
+*		minimo: minimo => encontra o mínimo de um array.
+*	}
+* Exemplo:
+*	var m = mat.util; // Pode-se armazenar em uma variável para uso frequente.
+*	m.maximo([2,5,6,1]); // Chama a função maximo.
+* DESDE: 1.0
+* VEJA: 
+*	documentação interna das funções.
+*/
+
 mat.util = (function(){
 	
 	/**
