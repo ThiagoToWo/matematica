@@ -1194,11 +1194,11 @@ mat.sistemas = (function(){
 	* Exemplo:
 	*	// Inicia a matriz A.
 	*	var A = [[2, 3,-1, 5],
-	*			 [4, 4,-3, 3],
-	*			 [2,-3, 1,-1]]
+	*	         [4, 4,-3, 3],
+	*	         [2,-3, 1,-1]]
 	*	// Faz A = [[4,  4,  -3,   3],
-	*	//			[0, -5, 2.5,-2.5],
-	*	//			[0,  0,   1,   3]].
+	*	//          [0, -5, 2.5,-2.5],
+	*	//          [0,  0,   1,   3]].
 	*	mat.sistemas.escalonar(A); 
 	* DESDE: 1.1
 	* VEJA: 
@@ -1259,11 +1259,11 @@ mat.sistemas = (function(){
 	* Exemplo:
 	*	// Inicia a matriz A.
 	*	var An = [[2, 3,-1],
-	*			 [4, 4,-3],
-	*			 [2,-3, 1]];
+	*	          [4, 4,-3],
+	*	          [2,-3, 1]];
 	*	// Faz An = [[4,  4,  -3],
-	*	//			 [0, -5, 2.5],
-	*	//			 [0,  0,   1]].
+	*	//           [0, -5, 2.5],
+	*	//           [0,  0,   1]].
 	*	mat.sistemas.det(An); // Retorna -20.
 	* DESDE: 1.2
 	* VEJA: 
@@ -1301,11 +1301,11 @@ mat.sistemas = (function(){
 	* Exemplo:
 	*	// Inicia a matriz A.
 	*	var Ab = [[2, 3,-1, 5],
-	*			  [4, 4,-3, 3],
-	*			  [2,-3, 1,-1]]
+	*	          [4, 4,-3, 3],
+	*	          [2,-3, 1,-1]]
 	*	// Faz Ab = [[4,  4,  -3,   3],
-	*	//			 [0, -5, 2.5,-2.5],
-	*	//			 [0,  0,   1,   3]].
+	*	//           [0, -5, 2.5,-2.5],
+	*	//           [0,  0,   1,   3]].
 	*	mat.sistemas.resolver(Ab); // Retorna [1,2,3].
 	* DESDE: 1.2
 	* VEJA: 
@@ -1350,11 +1350,11 @@ mat.sistemas = (function(){
 	* Exemplo:
 	*	// Inicia a matriz A.
 	*	var An = [[2, 3,-1],
-	*			 [4, 4,-3],
-	*			 [2,-3, 1]];
+	*	          [4, 4,-3],
+	*	          [2,-3, 1]];
 	*	// Retorna An = [[4,  4,  -3],
-	*	//			 	 [0, -5, 2.5],
-	*	//			 	 [0,  0,   1]].
+	*	//               [0, -5, 2.5],
+	*	//               [0,  0,   1]].
 	*	mat.sistemas.inversa(An);.
 	* DESDE: 1.?
 	* VEJA: 
