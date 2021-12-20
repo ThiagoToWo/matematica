@@ -2,6 +2,25 @@
 * matematica.js 1.0, 24/05/2021
 * Autor: Thiago de O. Alves.
 * 10/11/2021 - versão 1.4
+*
+* Sinopse: Retorna objetos com funçoes em várias áreas da matemática.
+*	mat.objeto
+* Estrutura: 
+*	É organizado da seguinte forma:
+*		1) mat.vetores: operações com vetores. 
+*		2) mat.estatistica: cálculos estatístios e plotagem.
+*		3) mat.conjuntos: operações com conjuntos.
+*		4) mat.quadratica: cálculos associados a função quadrática.
+*		5) mat.sistemas: cálculos associados a sistemas lineares.
+*		6) mat.geometria: cálculos de geometria.
+*		6) mat.aritmetica: cálculos de aritmética.
+*		6) mat.util: funções úteis.
+* Exemplo:
+*	var mv = mat.vetores; // Pode-se armazenar em uma variável para uso frequente.
+*	mv.soma([2,-3,4], [1,0,5]); // Chama a função soma.
+* DESDE: 1.0
+* VEJA: 
+*	documentação de cada objeto.
 */
 
 var mat = mat || {};
