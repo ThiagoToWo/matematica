@@ -1,7 +1,7 @@
 /**
 * matematica.js 1.0, 24/05/2021
 * Autor: Thiago de O. Alves.
-* 10/11/2021 - versão 1.4
+* 09/05/2022 - versão 1.4.1
 *
 * Sinopse: Retorna objetos com funçoes em várias áreas da matemática.
 *	mat.objeto
@@ -322,7 +322,7 @@ mat.estatistica = (function(){
 	
 	function frequencia(data) {
 		var f = [];
-		for (var i = 0; i < data.length; i++) {
+		for (var i = 0; i < data.length - 1; i++) {
 			for (var j = i + 1; j < data.length; j++) {
 				if (f[i] == undefined) f[i] = 1;
 				if (f[j] == undefined) f[j] = 1;
@@ -1112,7 +1112,7 @@ mat.sistemas = (function(){
 	*	//  -3x - y = -100
 	*	// e
 	*	//  2x + 3y - z = 5
-	*	// 	4x + 4y - 3z = 3
+	*	//  4x + 4y - 3z = 3
 	*	//  2x - 3y + z = -1
 	*	var la1 = [1,-2,10], la2 = [-3,-1,-100]; // Inicia o(s) argumento(s). 
 	*	mat.sistemas.cramer(la1, la2); // Retorna [30,10].
