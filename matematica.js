@@ -1,7 +1,7 @@
 /**
 * matematica.js 1.0, 24/05/2021
 * Autor: Thiago de O. Alves.
-* 09/05/2022 - versão 1.4.1
+* 14/06/2022 - versão 1.5
 *
 * Sinopse: Retorna objetos com funçoes em várias áreas da matemática.
 *	mat.objeto
@@ -49,7 +49,7 @@ var mat = mat || {};
 *	documentação interna das funções.
 */
 
-mat.vetores = (function(){
+mat.vetores = (function () {
 
 	/**
 	* Sinopse: calcula o produto escalar de dois vetores tridimensionais.
@@ -69,7 +69,7 @@ mat.vetores = (function(){
 	*	m.produtoInterno(a, b); // Retorna 2.
 	* DESDE: 1.0
 	*/
-	
+
 	function produtoInterno(a, b) {
 		return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 	}
@@ -92,7 +92,7 @@ mat.vetores = (function(){
 	*	m.produtoVetorial(a, b); // Retorna [-2, -3, 16].
 	* DESDE: 1.0
 	*/
-	
+
 	function produtoVetorial(a, b) {
 		var c = new Array(3);
 		c[0] = a[1] * b[2] - b[1] * a[2];
@@ -120,9 +120,9 @@ mat.vetores = (function(){
 	* VEJA: 
 	*	Math.sqrt().
 	*/
-	
+
 	function modulo(a) {
-		return Math.sqrt(a[0]**2 + a[1]**2 + a[2]**2);
+		return Math.sqrt(a[0] ** 2 + a[1] ** 2 + a[2] ** 2);
 	}
 
 	/**
@@ -147,7 +147,7 @@ mat.vetores = (function(){
 	* VEJA: 
 	*	produtoInterno(), Math.acos().
 	*/
-	
+
 	function angulo(a, b) {
 		var p = produtoInterno(a, b);
 		var ma = modulo(a);
@@ -173,7 +173,7 @@ mat.vetores = (function(){
 	*	m.soma(a, b); // Retorna [6, -1, 1].
 	* DESDE: 1.0
 	*/
-	
+
 	function soma(a, b) {
 		var r = new Array(3)
 		r[0] = a[0] + b[0];
@@ -181,7 +181,7 @@ mat.vetores = (function(){
 		r[2] = a[2] + b[2];
 		return r;
 	}
-			
+
 	/**
 	* Sinopse: calcula a diferença entre dois vetores tridimensionais.
 	*	mat.vetores.diferenca(a, b)
@@ -200,7 +200,7 @@ mat.vetores = (function(){
 	*	m.diferenca(a, b); // Retorna [-2, -5, -1].
 	* DESDE: 1.0
 	*/
-	
+
 	function diferenca(a, b) {
 		var r = new Array(3);
 		r[0] = a[0] - b[0];
@@ -208,7 +208,7 @@ mat.vetores = (function(){
 		r[2] = a[2] - b[2];
 		return r;
 	}
-	
+
 	return {
 		angulo: angulo,
 		diferenca: diferenca,
@@ -229,13 +229,15 @@ mat.vetores = (function(){
 *	Retorna o seguinte objeto.
 *	{
 *		desenharGrid: desenharGrid, => cria um grid em um canvas.
+*		desvioMedio: desvioMedio, => desvio médio dos elementos de um array.
 *		frequencia: frequencia, => freqência dos elementos de um array.
 *		media: media, => média dos elementos de um array.
 *		mediana: mediana, => mediana dos elementos de um array.
 *		moda: moda, => moda dos elementos de um array.
 *		plotarPontos: plotarPontos, => plota pontos no canvas.
 *		plotarReta: plotarReta, => plota reta no canvas.
-*		retaMinQuadrados: retaMinQuadrados => reta dos mínimos quadrados.
+*		retaMinQuadrados: retaMinQuadrados, => reta dos mínimos quadrados.
+*		variancia: variancia => variância dos elementos de um array.
 *	}
 * Exemplo:
 *	var me = mat.estatistica; // Pode-se armazenar em uma variável para uso frequente.
@@ -245,7 +247,7 @@ mat.vetores = (function(){
 *	documentação interna das funções.
 */
 
-mat.estatistica = (function(){
+mat.estatistica = (function () {
 
 	/**
 	* Sinopse: Calcula a média aritmética de uma lista de números.
@@ -293,7 +295,7 @@ mat.estatistica = (function(){
 
 	function mediana(data) {
 		var n = data.length;
-		data.sort(function(a, b) {
+		data.sort(function (a, b) {
 			return a - b;
 		});
 		if (n % 2 != 0) {
@@ -319,7 +321,7 @@ mat.estatistica = (function(){
 	*	m.frequencia(data2); // Retorna [2,1,2,2,2].
 	* DESDE: 1.0
 	*/
-	
+
 	function frequencia(data) {
 		var f = [];
 		for (var i = 0; i < data.length - 1; i++) {
@@ -331,7 +333,7 @@ mat.estatistica = (function(){
 					f[j]++;
 				}
 			}
-		}	
+		}
 		return f;
 	}
 
@@ -357,15 +359,63 @@ mat.estatistica = (function(){
 	* VEJA: 
 	*	frequencia(), mat.util.maximo(), mat.conjuntos.elementosDiferentes().
 	*/
-	
+
 	function moda(data) {
 		var freq = frequencia(data);
 		var max = mat.util.maximo(freq);
 		var moda = [];
 		for (var i in freq) {
-			if (freq[i] == max) moda.push(data[i]); 
-		}	
+			if (freq[i] == max) moda.push(data[i]);
+		}
 		return mat.conjuntos.elementosDiferentes(moda);
+	}
+
+	/**
+	* Sinopse: Calcula a variância de uma lista de números.
+	*	mat.estatistica.variancia(data)
+	* Entrada(s):
+	*	data: array de elementos numéricos.
+	* Saída: 
+	*	Retorna um número real, variância dos elementos de data.
+	* Exemplo:
+	*	var data = [2,4,3,5,5,6,3,5]; // Inicia o(s) argumento(s). 
+	*	mat.estatistica.variancia(data); // Retorna 1.609375.
+	* DESDE: 1.5
+	* VEJA: mat.estatistica.media();
+	*/
+
+	function variancia(data) {
+		var m = mat.estatistica.media(data);
+		var n = data.length;
+		var d2 = 0;
+		for (var i = 0; i < n; i++) {
+			d2 += (data[i] - m) * (data[i] - m);
+		}
+		return d2 / n;
+	}
+
+	/**
+	* Sinopse: Calcula o desvio médio de uma lista de números.
+	*	mat.estatistica.desvioMedio(data)
+	* Entrada(s):
+	*	data: array de elementos numéricos.
+	* Saída: 
+	*	Retorna um número real, desvio médio dos elementos de data.
+	* Exemplo:
+	*	var data = [2,4,3,5,5,6,3,5]; // Inicia o(s) argumento(s). 
+	*	mat.estatistica.desvioMedio(data); // Retorna 1.125.
+	* DESDE: 1.5
+	* VEJA: mat.estatistica.media();
+	*/
+
+	function desvioMedio(data) {
+		var m = mat.estatistica.media(data);
+		var n = data.length;
+		var d = 0;
+		for (var i = 0; i < n; i++) {
+			d += Math.abs(data[i] - m);
+		}
+		return d / n;
 	}
 
 	/**
@@ -393,7 +443,7 @@ mat.estatistica = (function(){
 	*	m.retaMinQuadrados(x, y); // Retorna [1.985,1.58,0.992406...].
 	* DESDE: 1.0
 	*/
-	
+
 	function retaMinQuadrados(x, y) {
 		var n = x.length;
 		var sx = 0;
@@ -409,11 +459,11 @@ mat.estatistica = (function(){
 			sy2 += y[i] * y[i];
 			sxy += x[i] * y[i];
 		}
-				
+
 		var normX = n * sx2 - sx * sx;
 		var normY = n * sy2 - sy * sy;
 		var normXY = n * sxy - sx * sy
-					
+
 		var a1 = normXY / normX;
 		var a0 = (sy - a1 * sx) / n;
 		var r = normXY / Math.sqrt(normX * normY);
@@ -468,25 +518,25 @@ mat.estatistica = (function(){
 	*	context.restore(), context.arc(), context.fill(), 
 	*	context.fillStyle, mat.util.maximo().
 	*/
-	
+
 	function plotarPontos(context, arrayX, arrayY, raio, bordaGrid, cor) {
 		if (raio == null) raio = 2;
 		if (bordaGrid == null) bordaGrid = 10;
 		if (cor == null) cor = 'black';
-		
+
 		var n = arrayX.length;
 		var altura = context.canvas.height - 2 * bordaGrid;
 		var largura = context.canvas.width - 2 * bordaGrid;
 		var largura_por_unidade = largura / mat.util.maximo(arrayX);
 		var altura_por_unidade = altura / mat.util.maximo(arrayY);
-		
+
 		context.save();
-		
+
 		for (var i = 0; i < n; i++) {
 			context.beginPath();
-			
+
 			context.arc(
-				bordaGrid + arrayX[i] * largura_por_unidade, 
+				bordaGrid + arrayX[i] * largura_por_unidade,
 				bordaGrid + altura - arrayY[i] * altura_por_unidade,
 				raio,
 				0,
@@ -495,10 +545,10 @@ mat.estatistica = (function(){
 			context.fillStyle = cor;
 			context.fill();
 		}
-		
+
 		context.restore();
 	}
-	
+
 	/**
 	* Sinopse: Desenha um grid em canvas.
 	*	mat.estatistica.desenharGrid(context, divisaoX, divisaoY, borda, cor)
@@ -534,41 +584,41 @@ mat.estatistica = (function(){
 	*	context.moveTo(), context.lineTo(), context.strokeStyle,
 	*	context.lineWidth.
 	*/
-	
+
 	function desenharGrid(context, divisaoX, divisaoY, borda, cor) {
 		if (divisaoX == null) divisaoX = 10;
 		if (divisaoY == null) divisaoY = 10;
 		if (borda == null) borda = 10;
 		if (cor == null) cor = 'black'
-		
+
 		var largura = context.canvas.width - 2 * borda;
-		var altura = context.canvas.height - 2 * borda;			
-		
-		context.save();			
+		var altura = context.canvas.height - 2 * borda;
+
+		context.save();
 		context.fillStyle = 'white';
 		context.fillRect(0, 0, context.canvas.width, context.canvas.height);
-		
+
 		context.lineWidth = 1;
 		context.strokeStyle = cor;
-		
+
 		// linhas verticais	
-		
+
 		for (var i = borda; i <= borda + largura; i += (largura / divisaoX)) {
-				context.beginPath()
-				context.moveTo(i, borda);
-				context.lineTo(i, borda + altura);					
-				context.stroke();
+			context.beginPath()
+			context.moveTo(i, borda);
+			context.lineTo(i, borda + altura);
+			context.stroke();
 		}
-		
-		
+
+
 		// linhas horizontais			
 		for (var i = borda; i <= borda + altura; i += (altura / divisaoY)) {
-				context.beginPath()
-				context.moveTo(borda, i);
-				context.lineTo(borda + largura, i);
-				context.stroke();
+			context.beginPath()
+			context.moveTo(borda, i);
+			context.lineTo(borda + largura, i);
+			context.stroke();
 		}
-		
+
 		context.restore();
 	}
 
@@ -616,26 +666,26 @@ mat.estatistica = (function(){
 	*	context.lineTo(), context.strokeStyle, context.lineWidth, 
 	*	mat.util.maximo(), mat.util.minimo().
 	*/
-	
+
 	function plotarReta(context, coefLinear, coefAngular, arrayX, espessura, bordaGrid, cor) {
 		if (espessura == null) espessura = 1;
 		if (cor == null) cor = 'black';
 		if (bordaGrid == null) bordaGrid = 10;
-		
+
 		var altura = context.canvas.height - 2 * bordaGrid;
-		var largura = context.canvas.width - 2 * bordaGrid;			
-		
+		var largura = context.canvas.width - 2 * bordaGrid;
+
 		x1 = mat.util.minimo(arrayX);
-		y1 = coefLinear + coefAngular  * x1;
-		
+		y1 = coefLinear + coefAngular * x1;
+
 		x2 = mat.util.maximo(arrayX);
-		y2 = coefLinear + coefAngular  * x2;
-		
+		y2 = coefLinear + coefAngular * x2;
+
 		var largura_por_unidade = largura / x2;
 		var altura_por_unidade = altura / y2;
-		
-		context.save();			
-		
+
+		context.save();
+
 		context.beginPath();
 		context.moveTo(
 			bordaGrid + x1 * largura_por_unidade,
@@ -648,19 +698,21 @@ mat.estatistica = (function(){
 		context.lineWidth = espessura;
 		context.strokeStyle = cor;
 		context.stroke();
-		
+
 		context.restore();
 	}
-	
-	return {		
+
+	return {
 		desenharGrid: desenharGrid,
+		desvioMedio: desvioMedio,
 		frequencia: frequencia,
 		media: media,
 		mediana: mediana,
 		moda: moda,
 		plotarPontos: plotarPontos,
 		plotarReta: plotarReta,
-		retaMinQuadrados: retaMinQuadrados
+		retaMinQuadrados: retaMinQuadrados,
+		variancia: variancia
 	};
 }());
 
@@ -688,8 +740,8 @@ mat.estatistica = (function(){
 *	documentação interna das funções.
 */
 
-mat.conjuntos = (function(){
-	
+mat.conjuntos = (function () {
+
 	/**
 	* Sinopse: Elimina duplicatas de um array.
 	*	mat.conjuntos.elementosDiferentes(array)
@@ -713,13 +765,13 @@ mat.conjuntos = (function(){
 	*	m.elementosDiferentes(array); // Retorna ["1","3","4","5","x"].
 	* DESDE: 1.0
 	*/
-	
+
 	function elementosDiferentes(array) {
-		dict = {}; 	
+		dict = {};
 		for (var i = 0; i < array.length; i++) {
-			dict[array[i]] = array[i]; 
-		}	
-		var novo_array = [];	
+			dict[array[i]] = array[i];
+		}
+		var novo_array = [];
 		for (var key in dict) {
 			novo_array.push(key);
 		}
@@ -751,7 +803,7 @@ mat.conjuntos = (function(){
 	* VEJA: 
 	*	elementosDiferentes(), Array.concat().
 	*/
-	
+
 	function uniao(array1, array2) {
 		return elementosDiferentes(array1.concat(array2));
 	}
@@ -781,7 +833,7 @@ mat.conjuntos = (function(){
 	* VEJA: 
 	*	elementosDiferentes(), Array.indexOf().
 	*/
-	
+
 	function intersecao(array1, array2) {
 		var inter = [];
 		for (var i in array1) {
@@ -818,7 +870,7 @@ mat.conjuntos = (function(){
 	* VEJA: 
 	*	elementosDiferentes(), Array.indexOf().
 	*/
-	
+
 	function diferenca(array1, array2) {
 		var dif = [];
 		for (var i in array1) {
@@ -828,7 +880,7 @@ mat.conjuntos = (function(){
 		}
 		return elementosDiferentes(dif);
 	}
-	
+
 	return {
 		diferenca: diferenca,
 		elementosDiferentes: elementosDiferentes,
@@ -862,8 +914,8 @@ mat.conjuntos = (function(){
 *	documentação interna das funções.
 */
 
-mat.quadratica = (function(){
-	
+mat.quadratica = (function () {
+
 	/**
 	* Sinopse: Calcula o discriminate da função quadrática.
 	*	mat.quadratica.delta(a, b, c)
@@ -881,7 +933,7 @@ mat.quadratica = (function(){
 	*	mat.quadratica.delta(a, b, c); // Retorna 49.
 	* DESDE: 1.0
 	*/
-	
+
 	function delta(a, b, c) {
 		return b * b - 4 * a * c;
 	}
@@ -913,12 +965,12 @@ mat.quadratica = (function(){
 	* VEJA: 
 	*	delta().
 	*/
-	
+
 	function raizes(a, b, c) {
 		var d = delta(a, b, c);
 		var x1;
 		var x2;
-		if (d >= 0 ) {
+		if (d >= 0) {
 			x1 = [(-b + Math.sqrt(d)) / (2 * a), 0];
 			x2 = [(-b - Math.sqrt(d)) / (2 * a), 0];
 		} else {
@@ -953,7 +1005,7 @@ mat.quadratica = (function(){
 	* VEJA: 
 	*	delta().
 	*/
-	
+
 	function vertice(a, b, c) {
 		var x = -b / (2 * a);
 		var y = -delta(a, b, c) / (4 * a);
@@ -986,7 +1038,7 @@ mat.quadratica = (function(){
 	* VEJA: 
 	*	delta(), raizes(), vertice().
 	*/
-	
+
 	function Quadratica(a, b, c) {
 		this.a = a; // Coeficiente a.
 		this.b = b; // Coeficiente b.
@@ -997,7 +1049,7 @@ mat.quadratica = (function(){
 		this.xv = vertice(this.a, this.b, this.c)[0]; // A coordenada x do vértice.
 		this.yv = vertice(this.a, this.b, this.c)[1]; // A coordenada y do vértice.
 	}
-	
+
 	return {
 		delta: delta,
 		Quadratica: Quadratica,
@@ -1032,8 +1084,8 @@ mat.quadratica = (function(){
 *	documentação interna das funções.
 */
 
-mat.sistemas = (function(){
-	
+mat.sistemas = (function () {
+
 	/**
 	* Sinopse: Calcula o determinante de uma matriz 3x3.
 	*	mat.sistemas.sarrus(l1, l2, l3)
@@ -1055,10 +1107,10 @@ mat.sistemas = (function(){
 	*	mat.sistemas.sarrus(l1, l2, l3); // Retorna -20.
 	* DESDE: 1.1
 	*/
-	
+
 	function sarrus(l1, l2, l3) {
-		var principal = l1[0]*l2[1]*l3[2] + l1[1]*l2[2]*l3[0] + l1[2]*l2[0]*l3[1];
-		var secundaria = l1[2]*l2[1]*l3[0] + l1[0]*l2[2]*l3[1] + l1[1]*l2[0]*l3[2];
+		var principal = l1[0] * l2[1] * l3[2] + l1[1] * l2[2] * l3[0] + l1[2] * l2[0] * l3[1];
+		var secundaria = l1[2] * l2[1] * l3[0] + l1[0] * l2[2] * l3[1] + l1[1] * l2[0] * l3[2];
 		return principal - secundaria;
 	}
 
@@ -1081,9 +1133,9 @@ mat.sistemas = (function(){
 	*	mat.sistemas.det2x2(l1, l2); // Retorna -4.
 	* DESDE: 1.1
 	*/
-	
+
 	function det2x2(l1, l2) {
-		return l1[0]*l2[1] - l1[1]*l2[0];
+		return l1[0] * l2[1] - l1[1] * l2[0];
 	}
 
 	/**
@@ -1123,7 +1175,7 @@ mat.sistemas = (function(){
 	* VEJA: 
 	*	det2x2(), sarrus().
 	*/
-	
+
 	function cramer(le1, le2, le3) {
 		if (arguments.length == 2) {
 			var d = det2x2(
@@ -1138,7 +1190,7 @@ mat.sistemas = (function(){
 				[le1[0], le1[2]],
 				[le2[0], le2[2]]
 			);
-			return [dx/d, dy/d];
+			return [dx / d, dy / d];
 		} else if (arguments.length == 3) {
 			var d = sarrus(
 				[le1[0], le1[1], le1[2]],
@@ -1160,10 +1212,10 @@ mat.sistemas = (function(){
 				[le2[0], le2[1], le2[3]],
 				[le3[0], le3[1], le3[3]]
 			);
-			return [dx/d, dy/d, dz/d];
+			return [dx / d, dy / d, dz / d];
 		} else {
 			throw new Error('a função deve ter dois ou três argumentos.')
-		}		
+		}
 	}
 
 	/**
@@ -1186,7 +1238,7 @@ mat.sistemas = (function(){
 	* VEJA: 
 	*	mat.util.encher().
 	*/
-	
+
 	function I(n) {
 		var I = new Array(n);
 		for (var i = 0; i < n; i++) {
@@ -1196,7 +1248,7 @@ mat.sistemas = (function(){
 		}
 		return I;
 	}
-	
+
 	/**
 	* Sinopse: Escalona uma matriz.
 	*	mat.sistemas.escalonar(A)
@@ -1223,7 +1275,7 @@ mat.sistemas = (function(){
 	* VEJA: 
 	*	Math.abs().
 	*/
-	
+
 	function escalonar(Amn) {
 		var m = Amn.length; // linhas.
 		var n = Amn[0].length; // colunas.
@@ -1248,18 +1300,18 @@ mat.sistemas = (function(){
 				sinal *= -1;
 			}
 			// Elimina os elementos abaixo na coluna.			
-			for (var j = i + 1; j < m; j++) {				
+			for (var j = i + 1; j < m; j++) {
 				if (Amn[j][i] != 0) {
 					var fator = -Amn[j][i] / Amn[i][i];
 					for (var k = i; k < n; k++) {
-							Amn[j][k] += Amn[i][k] * fator;
-					}					
-				}					
-			}						
+						Amn[j][k] += Amn[i][k] * fator;
+					}
+				}
+			}
 		}
 		return sinal;
 	}
-	
+
 	/**
 	* Sinopse: Calcula o determinante de uma matriz.
 	*	mat.sistemas.det(An)
@@ -1288,7 +1340,7 @@ mat.sistemas = (function(){
 	* VEJA: 
 	*	escalonar().
 	*/
-	
+
 	function det(An) {
 		var n = An.length; // ordem.
 		var cols = An[0].length; // colunas.
@@ -1300,7 +1352,7 @@ mat.sistemas = (function(){
 		}
 		return d * sinal;
 	}
-	
+
 	/**
 	* Sinopse: Resolve um sistema de equações lineares.
 	*	mat.sistemas.resolver(Ab)
@@ -1330,7 +1382,7 @@ mat.sistemas = (function(){
 	* VEJA: 
 	*	escalonar().
 	*/
-	
+
 	function resolver(Ab) {
 		var n = Ab.length;
 		var r = 1;
@@ -1351,7 +1403,7 @@ mat.sistemas = (function(){
 		}
 		return X;
 	}
-	
+
 	/**
 	* Sinopse: Calcula a inversa de uma matriz.
 	*	mat.sistemas.inversa(An)
@@ -1379,7 +1431,7 @@ mat.sistemas = (function(){
 	* VEJA: 
 	*	resolver().
 	*/
-	
+
 	function inversa(An) {
 		var n = An.length; // ordem.
 		var cols = An[0].length; // colunas.
@@ -1394,10 +1446,10 @@ mat.sistemas = (function(){
 				}
 			}
 			inv.push(resolver(An));
-		}		
+		}
 		return inv;
 	}
-	
+
 	return {
 		cramer: cramer,
 		det2x2: det2x2,
@@ -1431,8 +1483,8 @@ mat.sistemas = (function(){
 *	documentação interna das funções.
 */
 
-mat.geometria = (function(){
-	
+mat.geometria = (function () {
+
 	/**
 	* Sinopse: Retorna uma lista de ternos pitagóricos.
 	*	mat.geometria.ternoPit(n)
@@ -1454,7 +1506,7 @@ mat.geometria = (function(){
 	* VEJA: 
 	*	mat.aritmetica.mdc()
 	*/
-	
+
 	function ternoPit(n) {
 		var a = [];
 		for (var x = 2; x <= n; x++) {
@@ -1483,11 +1535,11 @@ mat.geometria = (function(){
 	* VEJA:
 	*	Math.sqrt();
 	*/
-	
+
 	function hipotenusa(cat1, cat2) {
 		return Math.sqrt(cat1 * cat1 + cat2 * cat2);
 	}
-	
+
 	/**
 	* Sinopse: Calcula um cateto de um triângulo retângulo.
 	*	mat.geometria.cateto(hip, cat)
@@ -1505,15 +1557,15 @@ mat.geometria = (function(){
 	* VEJA:
 	*	Math.sqrt();
 	*/
-	
+
 	function cateto(hip, cat) {
 		return Math.sqrt(hip * hip - cat * cat);
 	}
-	
+
 	return {
 		cateto: cateto,
 		hipotenusa: hipotenusa,
-		ternoPit: ternoPit		
+		ternoPit: ternoPit
 	};
 }());
 ///////////////////////////////////////////////////////////////////////
@@ -1535,8 +1587,8 @@ mat.geometria = (function(){
 *	documentação interna das funções.
 */
 
-mat.aritmetica = (function(){
-	
+mat.aritmetica = (function () {
+
 	/**
 	* Sinopse: Calcula o mdc de dois inteiros.
 	*	mat.aritmetica.mdc(m, n)
@@ -1549,7 +1601,7 @@ mat.aritmetica = (function(){
 	*	mat.aritmetica.mdc(84, 60); // Retorna 12.
 	* DESDE: 1.3
 	*/
-	
+
 	function mdc(m, n) {
 		if (m < 0) m *= -1;
 		if (n < 0) n *= -1;
@@ -1592,8 +1644,8 @@ mat.aritmetica = (function(){
 *	documentação interna das funções.
 */
 
-mat.util = (function(){
-	
+mat.util = (function () {
+
 	/**
 	* Sinopse: Retorna o elemento máximo do array.
 	*	mat.util.maximo(array)
@@ -1606,14 +1658,14 @@ mat.util = (function(){
 	*	mat.util.maximo(a); // Retorna 78.
 	* DESDE: 1.0
 	*/
-	
+
 	function maximo(array) {
 		var max = array[0];
-		
+
 		for (var i = 1; i < array.length; i++) {
 			if (array[i] > max) max = array[i];
 		}
-		
+
 		return max;
 	}
 
@@ -1629,17 +1681,17 @@ mat.util = (function(){
 	*	mat.util.minimo(a); // Retorna 1.
 	* DESDE: 1.0
 	*/
-	
+
 	function minimo(array) {
 		var min = array[0];
-		
+
 		for (var i = 1; i < array.length; i++) {
 			if (array[i] < min) min = array[i];
 		}
-		
+
 		return min;
 	}
-	
+
 	/**
 	* Sinopse: Preenche um array.
 	*	mat.util.encher(array, valor)
@@ -1660,13 +1712,13 @@ mat.util = (function(){
 	*	mat.util.encher(A,); // Faz A = [,,,].
 	* DESDE: 1.1
 	*/
-	
-	function encher(array, valor) {		
+
+	function encher(array, valor) {
 		for (var i = 0; i < array.length; i++) {
 			array[i] = valor;
 		}
 	}
-	
+
 	return {
 		encher: encher,
 		maximo: maximo,
