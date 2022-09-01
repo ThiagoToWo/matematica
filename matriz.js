@@ -107,15 +107,19 @@ Matriz.prototype.transposta = function () {
 	return transposta;
 }
 
-Matriz.prototype.escalar = function (k) {
-	for (let i = 0; i < this.m; i++) {
-		for (let j = 0; j < this.n; j++) {
-			this.tableau[i][j] *= k;
+Matriz.prototype.escalar = function(k) {
+	const kA = this.clone();
+
+	for (let i = 0; i < kA.m; i++) {
+		for (let j = 0; j < kA.n; j++) {
+			kA.tableau[i][j] *= k;
 		}
 	}
+
+	return kA;
 }
 
-Matriz.prototype.multiplica = function (B) {
+Matriz.prototype.multiplica = function(B) {
 	if (this.n == B.m) {
 		const C = new Matriz(this.m, B.n);
 
