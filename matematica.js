@@ -1,7 +1,7 @@
 /**
 * matematica.js 1.0, 24/05/2021
 * Autor: Thiago de O. Alves.
-* 14/06/2022 - versão 1.5
+* 22/09/2022 - versão 1.6
 *
 * Sinopse: Retorna objetos com funçoes em várias áreas da matemática.
 *	mat.objeto
@@ -13,8 +13,9 @@
 *		4) mat.quadratica: cálculos associados a função quadrática.
 *		5) mat.sistemas: cálculos associados a sistemas lineares.
 *		6) mat.geometria: cálculos de geometria.
-*		6) mat.aritmetica: cálculos de aritmética.
-*		6) mat.util: funções úteis.
+*		7) mat.aritmetica: cálculos de aritmética.
+*		8) mat.probabilidade: funções para várias distribuições de probabilidade.
+*		9) mat.util: funções úteis.
 * Exemplo:
 *	var mv = mat.vetores; // Pode-se armazenar em uma variável para uso frequente.
 *	mv.soma([2,-3,4], [1,0,5]); // Chama a função soma.
@@ -1461,6 +1462,7 @@ mat.sistemas = (function () {
 		sarrus: sarrus
 	};
 }());
+
 ///////////////////////////////////////////////////////////////////////
 
 //GEOMETRIA
@@ -1568,6 +1570,7 @@ mat.geometria = (function () {
 		ternoPit: ternoPit
 	};
 }());
+
 ///////////////////////////////////////////////////////////////////////
 
 //ARITMÉTICA
@@ -1623,6 +1626,118 @@ mat.aritmetica = (function () {
 		mdc: mdc
 	};
 }());
+
+///////////////////////////////////////////////////////////////////////
+// PROBABILIDADE
+/**
+* Sinopse: Funções para várias distribuições de probabilidade.
+*	mat.probabilidade
+* Retorna: 
+*	Retorna o seguinte objeto.
+*	{
+*		gauss: gauss, => retorna um valor aleatório em distribuição normal N ~ (0, 1).
+*		gaussMD: gaussMD, => retorna um valor aleatório em distribuição normal N ~ (M, D).
+*	}
+* Exemplo:
+*	const m = mat.probablilidade; // Pode-se armazenar em uma variável para uso frequente.
+*	const flag = {value: 0};
+*	const g = {value: undefined};
+*	m.gauss(flag, value); // Chama a função gauss.
+* DESDE: 1.6
+* VEJA: 
+*	documentação interna das funções.
+*/
+
+mat.probabilidade = (function () {
+
+	/**
+	* Sinopse: gerador de números aleatórios em distribuição normal de média 0 e desvio padrão 1
+	*   gauss(flag, g);
+	* Entrada(s):
+	*	flag: um objeto com atributo value (opcional) que será modificado por referência.
+	*   g: um objeto com atributo value (opcional) que será modificado por referência.
+	* Saída:
+	*   g.value ou outro número aleatório de distribuição gaussiana;
+	* Descrição:
+	*   A função recebe o objeto flag = {value: f}, onde f = 0 ou undefined, para dizer que
+	*   ainda não existe valor útil armazenado em g.value. 
+	*   O objeto g serve para guardar um dos valores de retorno em seu atributo value. A cada chamada
+	*   se flag.value = 0, dois valores são calculados, um retornado e outro guardado em g.value para
+	*   ser retornado diretamente na próxima chamada (quando flag.value = 1). Pode-se iniciar g como
+	*   {value: undefined}.
+	* Exemplo:
+	*   const flag = { value: 0 };
+	*   const g = { value: undefined }; 
+	* 
+	*   const rand = mat.probabilidade.gauss(flag, g);
+	*   console.log(rand);
+	* DESDE: 1.6
+	* VEJA:
+	*   Math.random();
+	*/
+
+	function gauss(flag, g) {
+		flag.value = 0; // flag para dizer se já tem um número para retornar
+		let r2; // raio ao quadrado
+		let v1;
+		let v2;
+		let frac;
+
+		if (flag.value == 0) {
+			do {
+				v1 = 2 * Math.random() - 1;
+				v2 = 2 * Math.random() - 1;
+				r2 = v1 * v1 + v2 * v2;
+			} while (r2 >= 1 || r2 == 0);
+
+			frac = Math.sqrt(-2 * Math.log(r2) / r2);
+			g.value = v1 * frac;
+			flag.value = 1;
+			return v2 * frac;
+		} else {
+			flag.value = 0;
+			return g.value;
+		}
+	}
+
+	/**
+	* Sinopse: gerador de números aleatórios em distribuição normal de média M e desvio padrão D
+	*   gaussMD(flag, g, M, D);
+	* Entrada(s):
+	*   flag: um objeto com atributo value (opcional) que será modificadom por referência.
+	*   g: um objeto com atributo value (opcional) que será modificadom por referência.
+	*   M: um número representando a média da distribuição gaussiana.
+	*   D: um número representando o desvio padrão da distribuição gaussiana.
+	* Saída:
+	*   g.value ou outro número aleatório de distribuição gaussiana;
+	* Descrição:
+	*   A função também recebe o objeto flag = {value: f}, onde f = 0 ou undefined, para dizer que
+	*   ainda não existe valor útil armazenado em g.value. 
+	*   O objeto g serve para guardar um dos valores de retorno em seu atributo value. A cada chamada
+	*   se flag.value = 0, dois valores são calculados, um retornado e outro guardado em g.value para
+	*   ser retornado diretamente na próxima chamada (quando flag.value = 1). Pode-se iniciar g como
+	*   {value: undefined}.
+	* Exemplo:
+	*   const flag = { value: 0 };
+	*   const g = { value: undefined }; 
+	* 
+	*   const rand = mat.probabilidade.gaussMD(flag, g, M, D);
+	*   console.log(rand);
+	* DESDE: 1.6
+	* VEJA:
+	*   mat.probabilidade.gauss();
+	*/
+
+	function gaussMD(flag, g, M, D) {
+		return D * gauss(flag, g) + M;
+	}
+
+	return {
+		gauss: gauss,
+		gaussMD: gaussMD
+	};
+}());
+
 ///////////////////////////////////////////////////////////////////////
 
 //FUNÇÕES ÚTEIS
