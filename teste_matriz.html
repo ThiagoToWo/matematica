@@ -1,0 +1,53 @@
+Abra o console e atualize a página para ver as impressões do teste da classe Matriz.
+<script src="matriz.js"></script>
+<script>
+    const N = new Matriz(3, 3); // cria uma matriz nula 3 x 3
+    const I_4x4 = Matriz.identidade(4); // cria uma matriz identidade 4 x 4
+    const A = new Matriz(2, 2, 1, 2, 3, -1); // cria uma matriz 2 x 2 com os elementos 1, 2, 3, -1
+    const B = new Matriz(2, 3, 1, -2, 3, 2, 4, 0); // cria uma matriz 2 x 3 com os elementos 1, -2, 3, 2, 4, 0
+    const C = new Matriz(2, 3, 0, 5, 10, 7, 3, 1); // cria uma matriz 2 x 3 com os elementos 0, 5, 10, 7, 3, 1
+    const oA = A.oposta(); // cria a matriz oposta de A
+    const At = A.transposta(); // cria a matriz transposta à A
+    const A2 = A.escalar(2); // obtém a multiplicação 2.A
+    const C5 = C.escalar(5); // obtém a multiplicação 5.C
+    //AmaisB = A.soma(B); // lança o erro "The arrays do not have the same order"
+    //AmenosB = A.subtrai(B); // lança o erro "The arrays do not have the same order"
+    //BvezesA = B.multiplica(A); // lança o erro "The column size of the first array (3) is different from the line size of the second (2)"
+    const BmaisC = B.soma(C); // obtém a soma B + C
+    const BmenosC = B.subtrai(C); // obtém a subtração B - C
+    const AvezesB = A.multiplica(B); // obtém a multiplicação A.B
+    const cA = A.clone(); // cria uma cópia de A
+    const D = new Matriz(2, 3, 1, -2, 3, 5, 4, 0); // cria uma matriz 2 x 3 com os elementos 1, -2, 3, 5, 4, 0
+
+    console.log("I_4x4 (matriz identidade 4 x 4):");
+    I_4x4.imprimir(); // imprime I_4x4
+    console.log("N_3x3 (matriz nula 3 x 3):");
+    N.imprimir(); // imprime N
+    console.log("A:");
+    A.imprimir(); // imprime A
+    console.log("cA (clone da matriz A):");
+    cA.imprimir(); // imprime cA
+    console.log("oA (oposta de A):");
+    oA.imprimir(); // imprime oA
+    console.log("At (transposta de A):");
+    At.imprimir(); // imprime At
+    console.log("B:");
+    B.imprimir(); // imprime B
+    console.log("C:");
+    C.imprimir(); // imprime C
+    console.log("2A:");
+    A2.imprimir(); // imprime A2
+    console.log("5C:");
+    C5.imprimir(); // imprime C5
+    console.log("B + C:");
+    BmaisC.imprimir(); // imprime BmaisC
+    console.log("B - C:");
+    BmenosC.imprimir(); // imprime BmenosC
+    console.log("3B - 2C:");
+    B.escalar(3).subtrai(C.escalar(2)).imprimir(); // calcula e imprime 3B - 2C
+    console.log("A x B:");
+    AvezesB.imprimir(); // imprime AvezesB
+    console.log("A = B?", A.igual(B)); // false
+    console.log("A = cA?", A.igual(cA)); // true
+    console.log("B = D?", B.igual(D)); // false
+</script>

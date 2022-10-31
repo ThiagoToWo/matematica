@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Gráfico</title>
+    <style>
+        canvas {
+            border: solid;
+        }
+
+        fieldset {
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas width="700" height="500"></canvas>
+    <script src="grafico.js"></script>
+    <form>
+        <fieldset>
+            <legend>Valores do Gráfico</legend>
+            <p>x mínimo: <input type="number" id="inXmin" value="-5" required></p>
+            <p>x máximo: <input type="number" id="inXmax" value="5" required></p>
+            <p>y mínimo: <input type="number" id="inYmin" value="-10" required></p>
+            <p>y máximo: <input type="number" id="inYmax" value="10" required></p>
+            <p>x0: <input type="number" min="0" max="700" id="inX0" value="150" required></p>
+            <p>y0: <input type="number" min="0" max="500" id="inY0" value="50" required></p>
+            <p>Largura: <input type="number" min="0" max="700" id="inLargura" value="400" required></p>
+            <p>Altura: <input type="number" min="0" max="700" id="inAltura" value="400" required></p>
+        </fieldset>
+        <fieldset>
+            <legend>Valores da Grade</legend>
+            <p>Divisão x: <input type="number" id="inDivisaoX" value="1" required></p>
+            <p>Divisão y: <input type="number" id="inDivisaoY" value="2" required></p>
+            <p>Subdivisão x: <input type="number" min="0.1" step="0.1" id="inSubdivisaoX" value="0.5"></p>
+            <p>Subdivisão y: <input type="number" min="0.1" step="0.1" id="inSubdivisaoY" value="1"></p>
+            <p>Legenda x: <input type="text" id="inRotuloX" value="eixo das abscissas"></p>
+            <p>Legenda Y: <input type="text" id="inRotuloY" value="eixo das ordenadas"></p>
+        </fieldset>
+        <fieldset>
+            <legend>Características da Plotagem</legend>
+            <p>Array X: <input type="text" id="inArrayX" value="-3 -2 -1 0 1 2 3" required></p>
+            <p>Array Y: <input type="text" id="inArrayY" value="9 4 1 0 1 4 9" required></p>
+            <p>Cor: <input type="color" id="inCor" required></p>
+            <p><input type="checkbox" id="ckPontos" checked> Pontos</p>
+            <p><input type="checkbox" id="ckLinha" checked> Linha</p>
+        </fieldset>
+        <input type="submit" value="Criar Gráfico">
+    </form>
+    <script>
+        const form = document.querySelector("form");
+        const canvas = document.querySelector("canvas");
+        const ctx = canvas.getContext("2d");
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const xmin = Number(form.inXmin.value);
+            const xmax = Number(form.inXmax.value);
+            const ymin = Number(form.inYmin.value);
+            const ymax = Number(form.inYmax.value);
+            const x0 = Number(form.inX0.value);
+            const y0 = Number(form.inY0.value);
+            const larg = Number(form.inLargura.value);
+            const alt = Number(form.inAltura.value);
+            const divX = Number(form.inDivisaoX.value);
+            const divY = Number(form.inDivisaoY.value);
+            const subdivX = Number(form.inSubdivisaoX.value);
+            const subdivY = Number(form.inSubdivisaoY.value);
+            const rotuloX = form.inRotuloX.value;
+            const rotuloY = form.inRotuloY.value;
+            const X = form.inArrayX.value.split(" ");
+            const Y = form.inArrayY.value.split(" ");
+            const arrayX = [];
+            const arrayY = [];
+
+            for (let i = 0; i < X.length; i++) {
+                arrayX.push(Number(X[i]));
+                arrayY.push(Number(Y[i]));
+            }
+
+            const cor = form.inCor.value;
+            const pontos = form.ckPontos.checked;
+            const linha = form.ckLinha.checked;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const g = new Grafico(ctx, xmin, xmax, ymin, ymax, x0, y0, larg, alt);
+            g.desenharGrades(divX, subdivX, divY, subdivY);
+            g.desenharEixos(rotuloX, rotuloY);
+            g.plotar(arrayX, arrayY, cor, pontos, linha);
+        });        
+    </script>
+</body>
