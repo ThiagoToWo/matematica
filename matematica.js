@@ -1,7 +1,7 @@
 /**
 * matematica.js 1.0, 24/05/2021
 * Autor: Thiago de O. Alves.
-* 22/09/2022 - versão 1.6
+* 25/07/2023 - versão 1.7
 *
 * Sinopse: Retorna objetos com funçoes em várias áreas da matemática.
 *	mat.objeto
@@ -1704,8 +1704,8 @@ mat.probabilidade = (function () {
 	* Sinopse: gerador de números aleatórios em distribuição normal de média M e desvio padrão D
 	*   gaussMD(flag, g, M, D);
 	* Entrada(s):
-	*   flag: um objeto com atributo value (opcional) que será modificadom por referência.
-	*   g: um objeto com atributo value (opcional) que será modificadom por referência.
+	*   flag: um objeto com atributo value (opcional) que será modificado por referência.
+	*   g: um objeto com atributo value (opcional) que será modificado por referência.
 	*   M: um número representando a média da distribuição gaussiana.
 	*   D: um número representando o desvio padrão da distribuição gaussiana.
 	* Saída:
@@ -1736,6 +1736,109 @@ mat.probabilidade = (function () {
 		gauss: gauss,
 		gaussMD: gaussMD
 	};
+}());
+
+///////////////////////////////////////////////////////////////////////
+
+//COMBINATÓRIA
+/**
+* Sinopse: Funções de análise combinatória.
+*	mat.combinatoria
+* Retorna: 
+*	Retorna o seguinte objeto.
+*	{
+*		anagramas: anagramas, => gera todos os anagramas de um string.
+*		deslocar: deslocar => desloca as letras de um string.
+*	}
+* Exemplo:
+*	const c = mat.combinatoria; // Pode-se armazenar em uma variável para uso frequente.
+*	c.anagramas("AMOR") // chama a função anagramas
+* DESDE: 1.7
+* VEJA: 
+*	documentação interna das funções.
+*/
+
+mat.combinatoria = (function () {
+
+	/**
+	* Sinopse: Desloca ciclicamente para esquerda os caracteres de um string.
+	*	mat.combinatoria.deslocar(str, k)
+	* Entrada(s):
+	*	str: uma cadeia de caracteres.
+	*	k: número inteiro que representa o índice do último caracter a ser deslocado.
+	* Saída: 
+	*	Retorna um string com os caracteres deslocados ciclicamente para a esquerda
+	*	até o caracter do índice determinado. Retorna uma exceção caso a valor do
+	*	índice seja maior ou igual o tamanho do string.
+	* Descrição:
+	*	O deslocamento cíclico para a esquerda até um índice k do string str equivale
+	*	a deslocar para esquerda os caracteres até chegar no caracter str[k] e colocar o
+	*	primeiro caracter no espaço vazio que aparece na posição k.
+	* Exemplo:
+	*	mat.combinatoria.deslocar("12345", 2); // "23145".
+	*	mat.combinatoria.deslocar("AMOR", 3); // "MORA".
+	* DESDE: 1.7
+	*/
+
+	function deslocar(str, k) {
+		const tamanho = str.length;
+		if (k >= str.length) throw new Error("índice k maior ou igual ao tamanho do string.");
+		let desl = [];
+		for (let i = 0; i < tamanho; i++) {
+			desl[i] = str[i];
+		}
+		const prim = desl[0];
+		for (let i = 1; i <= k; i++) {
+			desl[i - 1] = desl[i];
+		}
+		desl[k] = prim;
+		return desl.join("");
+	}
+
+	/**
+	* Sinopse: Cria um array com todos os anagramas do string dado.
+	*	mat.combinatoria.anagramas(str)
+	* Entrada:
+	*	str: uma cadeia de caracteres.
+	* Saída: 
+	*	Retorna um array em que cada elemento é um anagrama do parâmetro str.
+	* Exemplo:
+	*	const texto = "ABC"; // Inicia o argumento. 
+	*	mat.combinatoria.anagramas(texto); // Retorna ['ABC', 'BCA', 'CAB', 'BAC', 'ACB', 'CBA'].
+	* DESDE: 1.7
+	* VEJA: 
+	*	mat.combinatoria.deslocar().
+	*/
+
+	function anagramas(str) {
+		const copia = str;
+		const anam = [str];
+		let tamanho = str.length;
+		let k = tamanho - 1;
+		let feito = false;
+		str = deslocar(str, k);
+		while (!feito) {
+			while (str[k] == copia[k] && k > 1) {
+				k--;
+				str = deslocar(str, k);
+			}
+			if (k == 1 && str[k] == copia[k]) {
+				feito = true;
+			} else {
+				while (str[k] != copia[k]) {
+					anam.push(str);
+					k = tamanho - 1;
+					str = deslocar(str, k);
+				}
+			}
+		}
+		return anam;
+	}
+
+	return {
+		anagramas: anagramas,
+		deslocar: deslocar
+	}
 }());
 
 ///////////////////////////////////////////////////////////////////////
