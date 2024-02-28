@@ -15,7 +15,8 @@
 *		6) mat.geometria: cálculos de geometria.
 *		7) mat.aritmetica: cálculos de aritmética.
 *		8) mat.probabilidade: funções para várias distribuições de probabilidade.
-*		9) mat.util: funções úteis.
+		9) mat.combinatoria: funções de análise combinatória.
+*		10) mat.util: funções úteis.
 * Exemplo:
 *	var mv = mat.vetores; // Pode-se armazenar em uma variável para uso frequente.
 *	mv.soma([2,-3,4], [1,0,5]); // Chama a função soma.
