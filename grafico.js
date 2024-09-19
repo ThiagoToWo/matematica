@@ -4,7 +4,7 @@
 */
 
 /**
-* Sinopse: Classe para operações com matrizes.
+* Sinopse: Classe para plotagem de gráficos.
 *	Grafico(contexto, xmin, xmax, ymin, ymax, x0, y0, largura, altura)
 * Dados:
 *	Possui os seguintes dados públicos:
